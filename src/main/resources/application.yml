@@ -1,0 +1,13 @@
+server:
+  port: 6969
+  servlet:
+    context-path: /studentmanager
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ssms
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
