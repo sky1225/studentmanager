@@ -3,32 +3,31 @@ package com.hfut.studentmanager.pojo;
 
 public class GradeCourse {
 
-  private long id;
-  private long gradeId;
-  private long courseId;
+  private Integer id;
+  private Integer gradeId;
+  private Integer courseId;
 
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-  public long getGradeId() {
+  public Integer getGradeId() {
     return gradeId;
   }
 
-  public void setGradeId(long gradeId) {
+  public void setGradeId(Integer gradeId) {
     this.gradeId = gradeId;
   }
 
-  public long getCourseId() {
+  public Integer getCourseId() {
     return courseId;
   }
 
-  public void setCourseId(long courseId) {
+  public void setCourseId(Integer courseId) {
     this.courseId = courseId;
   }
 }

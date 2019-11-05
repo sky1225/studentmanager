@@ -17,10 +17,13 @@ public interface ClazzMapper {
     public List<Clazz> findAllClazz();
 
     @Select("select * from clazz where gradeId=#{gradeId}")
-    public List<Clazz> findClazzByGradeId(String gradeId);
+    public List<Clazz> findClazzByGradeId(Integer gradeId);
 
     @Select("select name from clazz where id=#{id}")
-    public String findNameById(long id);
+    public String findNameById(Integer id);
+
+    @Select("select id from clazz where name=#{name} and gradeId=#{gradeId}")
+    public List<Integer> findIdByNameAndGradeId(String name, Integer gradeId);
 
     @Insert("insert into clazz(name, gradeId) values (#{name}, #{gradeId})")
     public boolean insertClazz(Clazz clazz);

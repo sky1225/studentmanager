@@ -1,26 +1,27 @@
 package com.hfut.studentmanager.pojo;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Student {
 
-  private long id;
+  private Integer id;
   private String number;
   private String name;
   private String sex;
   private String phone;
   private String qq;
-  private long clazzId;
-  private long gradeId;
+  private Integer clazzId;
+  private Integer gradeId;
 
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
-
 
   public String getNumber() {
     return number;
@@ -30,7 +31,6 @@ public class Student {
     this.number = number;
   }
 
-
   public String getName() {
     return name;
   }
@@ -38,7 +38,6 @@ public class Student {
   public void setName(String name) {
     this.name = name;
   }
-
 
   public String getSex() {
     return sex;
@@ -48,7 +47,6 @@ public class Student {
     this.sex = sex;
   }
 
-
   public String getPhone() {
     return phone;
   }
@@ -56,7 +54,6 @@ public class Student {
   public void setPhone(String phone) {
     this.phone = phone;
   }
-
 
   public String getQq() {
     return qq;
@@ -66,19 +63,19 @@ public class Student {
     this.qq = qq;
   }
 
-  public long getClazzId() {
+  public Integer getClazzId() {
     return clazzId;
   }
 
-  public void setClazzId(long clazzId) {
+  public void setClazzId(Integer clazzId) {
     this.clazzId = clazzId;
   }
 
-  public long getGradeId() {
+  public Integer getGradeId() {
     return gradeId;
   }
 
-  public void setGradeId(long gradeId) {
+  public void setGradeId(Integer gradeId) {
     this.gradeId = gradeId;
   }
 }

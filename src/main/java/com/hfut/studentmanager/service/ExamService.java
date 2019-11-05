@@ -43,4 +43,12 @@ public class ExamService {
         }
         return result;
     }
+
+    public boolean addExam(Exam exam){
+        return examMapper.insertExam(exam);
+    }
+
+    public boolean deleteExam(Integer id){
+        return examMapper.deleteExamById(id);
+    }
 }

@@ -18,14 +18,17 @@ public interface GradeMapper {
     public List<Grade> findAllGrade();
 
     @Select("select * from grade where id=#{id}")
-    public List<Grade> findGradeById(long id);
+    public List<Grade> findGradeById(Integer id);
 
     @Select("select name from grade where id=#{id}")
-    public String findNameById(long id);
+    public String findNameById(Integer id);
+
+    @Select("select id from grade where name=#{name}")
+    public List<Integer> findIdByName(String name);
 
     @Insert("insert into grade(name) values (#{grade})")
     public boolean insertGrade(Grade grade);
 
     @Delete("delete from grade where id=#{id}")
-    public boolean deleteGradeById(long id);
+    public boolean deleteGradeById(Integer id);
 }

@@ -14,18 +14,18 @@ import java.util.List;
 public interface CourseMapper {
 
     @Select("select name from course where id=#{id}")
-    public String findNameById(long id);
+    public String findNameById(Integer id);
 
     @Select("select * from course")
     public List<Course> findAllCourse();
 
     @Select("select * from course where id=#{id}")
-    public List<Course> findCourseById(long id);
+    public List<Course> findCourseById(Integer id);
 
     @Insert("insert into course(name) values (#{name})")
     public boolean insertCourse(Course course);
 
     @Delete("delete from course where id=#{id}")
-    public boolean deleteCourse(long id);
+    public boolean deleteCourse(Integer id);
 
 }

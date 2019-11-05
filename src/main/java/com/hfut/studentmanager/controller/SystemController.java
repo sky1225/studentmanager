@@ -1,17 +1,16 @@
 package com.hfut.studentmanager.controller;
 
-import com.hfut.studentmanager.pojo.Clazz;
-import com.hfut.studentmanager.pojo.Student;
-import com.hfut.studentmanager.pojo.Teacher;
-import com.hfut.studentmanager.pojo.User;
+import com.hfut.studentmanager.pojo.*;
 import com.hfut.studentmanager.service.*;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
+import com.hfut.studentmanager.utils.jsonBean.JSONStudent;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.ResultSet;
+import java.lang.System;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +47,7 @@ public class SystemController {
                 List<Map<String, Object>> examList = examService.listAllExam();
                 return ResultUtils.success(examList);
             case "listAllClazz":
-                List<Clazz> classList = clazzService.getClazzList();
+                List<Clazz> classList = clazzService.listAllClazz();
                 return ResultUtils.success(classList);
             default:
                 return ResultUtils.error(404, "请求参数method错误");
@@ -56,27 +55,40 @@ public class SystemController {
     }
 
     @PostMapping("/add")
-    public Message add(
-            @RequestParam("method") String method,
-            @RequestParam("data") Map<String, Object> data){
+    public Message add(@RequestBody Map<String, Object> map){
+        System.out.println(map.get("student"));
+        User user = new User();
+        String method = (String) map.get("method");
         switch (method){
             case "addStudent":
-                Student student = new Student();
-                student.setName((String) data.get("name"));
-                student.setNumber((String) data.get("number"));
-                student.setSex((String) data.get("sex"));
-                student.setPhone((String) data.get("phone"));
-                student.setQq((String) data.get("qq"));
-                User user = new User();
-                user.setAccount(student.getNumber());
+                JSONObject jsonObject = JSONObject.fromObject(map.get("student"));
+                JSONStudent jsonStudent = (JSONStudent) JSONObject.toBean(jsonObject, JSONStudent.class);
+                user = new User();
+                user.setAccount(jsonStudent.getNumber());
                 user.setPassword("111111");
                 user.setType(2);
-                if (studentService.addStudent(student) && userService.addUser(user)){
+                Message addStudentResult = studentService.addStudent(jsonStudent);
+                if (addStudentResult.getCode().equals("200")){
+                    Message addUserResult = userService.addUser(user);
+                    if (addUserResult.getCode().equals("200")){
+                        return ResultUtils.success();
+                    }else {
+                        return addUserResult;
+                    }
+                }else {
+                    return addStudentResult;
+                }
+            case "addTeacher":
+                Teacher teacher = (Teacher) map.get("teacher");
+                user.setAccount(teacher.getNumber());
+                user.setPassword("111111");
+                user.setType(3);
+                if (teacherService.addTeacher(teacher)){
+
                     return ResultUtils.success();
                 }else {
-                    return ResultUtils.error(404, "学生信息添加失败");
+                    return ResultUtils.error(404, "教师信息添加失败");
                 }
-//            case "addTeacher":
             default:
                 return ResultUtils.error(404, "添加失败，method参数格式错误");
 

@@ -19,6 +19,6 @@ public interface UserMapper {
     public boolean updateUserPassword(User user);
 
     @Delete("delete from user where id=#{id}")
-    public boolean deleteUser(long id);
+    public boolean deleteUser(Integer id);
 
 }

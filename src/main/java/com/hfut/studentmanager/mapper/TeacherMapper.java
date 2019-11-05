@@ -24,6 +24,6 @@ public interface TeacherMapper {
     public boolean insertTeacher(Teacher teacher);
 
     @Delete("delete from teacher where id=#{id}")
-    public boolean deleteTeacher(long id);
+    public boolean deleteTeacher(Integer id);
 }
 

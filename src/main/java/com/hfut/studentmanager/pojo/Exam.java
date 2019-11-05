@@ -5,20 +5,20 @@ import java.sql.Date;
 
 public class Exam {
 
-  private long id;
+  private Integer id;
   private String name;
-  private java.sql.Date time;
+  private Date time;
   private String remark;
-  private long type;
-  private long gradeId;
-  private long clazzId;
-  private long courseId;
+  private Integer type;
+  private Integer gradeId;
+  private Integer clazzId;
+  private Integer courseId;
 
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -46,35 +46,35 @@ public class Exam {
     this.remark = remark;
   }
 
-  public long getType() {
+  public Integer getType() {
     return type;
   }
 
-  public void setType(long type) {
+  public void setType(Integer type) {
     this.type = type;
   }
 
-  public long getGradeId() {
+  public Integer getGradeId() {
     return gradeId;
   }
 
-  public void setGradeId(long gradeId) {
+  public void setGradeId(Integer gradeId) {
     this.gradeId = gradeId;
   }
 
-  public long getClazzId() {
+  public Integer getClazzId() {
     return clazzId;
   }
 
-  public void setClazzId(long clazzId) {
+  public void setClazzId(Integer clazzId) {
     this.clazzId = clazzId;
   }
 
-  public long getCourseId() {
+  public Integer getCourseId() {
     return courseId;
   }
 
-  public void setCourseId(long courseId) {
+  public void setCourseId(Integer courseId) {
     this.courseId = courseId;
   }
 }

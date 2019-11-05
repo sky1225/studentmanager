@@ -16,4 +16,8 @@ public class TeacherService {
     public List<Teacher> listAllTeacher(){
         return teacherMapper.findAllTeacher();
     }
+
+    public boolean addTeacher(Teacher teacher){
+        return teacherMapper.insertTeacher(teacher);
+    }
 }

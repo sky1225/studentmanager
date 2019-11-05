@@ -3,22 +3,20 @@ package com.hfut.studentmanager.pojo;
 
 public class Teacher {
 
-  private long id;
+  private Integer id;
   private String number;
   private String name;
   private String sex;
   private String phone;
   private String qq;
 
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
-
 
   public String getNumber() {
     return number;

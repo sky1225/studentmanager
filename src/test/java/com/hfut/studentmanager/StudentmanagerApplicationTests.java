@@ -20,7 +20,7 @@ class StudentmanagerApplicationTests {
         if (clazzService == null){
             System.out.println("空指针");
         }else {
-            System.out.println(clazzService.getClazzList());
+            System.out.println(clazzService.listAllClazz());
 
         }
     }

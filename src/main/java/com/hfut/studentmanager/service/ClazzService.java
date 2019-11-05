@@ -13,7 +13,15 @@ public class ClazzService {
     @Autowired
     private ClazzMapper clazzMapper;
 
-    public List<Clazz> getClazzList(){
+    public List<Clazz> listAllClazz(){
         return clazzMapper.findAllClazz();
+    }
+
+    public boolean addClazz(Clazz clazz){
+        return clazzMapper.insertClazz(clazz);
+    }
+
+    public boolean deleteClazz(Integer id){
+        return clazzMapper.deleteClazz(id);
     }
 }
