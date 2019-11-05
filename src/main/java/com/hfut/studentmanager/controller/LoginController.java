@@ -5,15 +5,18 @@ import com.hfut.studentmanager.service.UserService;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @RequestMapping("/")
+    public String hello(){
+        return "你好，访问成功";
+    }
 
     @PostMapping("/login")
     public Message login(

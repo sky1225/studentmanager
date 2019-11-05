@@ -3,21 +3,19 @@ package com.hfut.studentmanager.pojo;
 
 public class User {
 
-  private long id;
+  private Integer id;
   private String account;
   private String password;
   private String name;
-  private long type;
+  private Integer type;
 
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
-
 
   public String getAccount() {
     return account;
@@ -27,7 +25,6 @@ public class User {
     this.account = account;
   }
 
-
   public String getPassword() {
     return password;
   }
@@ -35,7 +32,6 @@ public class User {
   public void setPassword(String password) {
     this.password = password;
   }
-
 
   public String getName() {
     return name;
@@ -45,13 +41,11 @@ public class User {
     this.name = name;
   }
 
-
-  public long getType() {
+  public Integer getType() {
     return type;
   }
 
-  public void setType(long type) {
+  public void setType(Integer type) {
     this.type = type;
   }
-
 }

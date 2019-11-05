@@ -1,16 +1,9 @@
-package com.hfut.studentmanager;
+package com.hfut.studentmanager.service;
 
-import com.hfut.studentmanager.service.ClazzService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class StudentmanagerApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
+public class ClazzServiceTest {
 
     @Autowired
     private ClazzService clazzService;
@@ -24,5 +17,4 @@ class StudentmanagerApplicationTests {
 
         }
     }
-
 }

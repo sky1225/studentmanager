@@ -1,8 +1,7 @@
 package com.hfut.studentmanager.mapper;
 
 import com.hfut.studentmanager.pojo.Student;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -21,20 +20,20 @@ public interface StudentMapper {
     @Select("select * from student")
     public List<Student> findAllStudent();
 
-    @Select("select * from student where clazzid=#{clazzid}")
-    public List<Student> findStudentByClazzid(String clazzid);
+    @Select("select * from student where clazzId=#{clazzId}")
+    public List<Student> findStudentByClazzId(String clazzId);
 
-    @Select("select * from student where gradeid=#{gradeid}")
-    public List<Student> findStudentByGradeid(String gradeid);
+    @Select("select * from student where gradeId=#{gradeId}")
+    public List<Student> findStudentByGradeId(String gradeId);
 
-    @Select("insert into student(number, name, sex, phone, qq, clazzid, gradeid) values" +
-            "#{number}, #{name}, #{sex}, #{phone}, #{qq}, #{clazzid}, #{gradeid}")
+    @Insert("insert into student(number, name, sex, phone, qq, clazzId, gradeId) values" +
+            "(#{number}, #{name}, #{sex}, #{phone}, #{qq}, #{clazzId}, #{gradeId})")
     public boolean insertStudent(Student student);
 
-    @Select("update student set phone=#{phone}, qq=#{qq}")
+    @Update("update student set phone=#{phone}, qq=#{qq}")
     public boolean updateStudent(Student student);
 
-    @Select("delete from student where number=#{number}")
+    @Delete("delete from student where number=#{number}")
     public boolean deleteStudent(String number);
 
 }

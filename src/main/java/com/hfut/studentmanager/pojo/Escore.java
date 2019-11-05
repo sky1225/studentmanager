@@ -3,75 +3,67 @@ package com.hfut.studentmanager.pojo;
 
 public class Escore {
 
-  private long id;
-  private long examid;
-  private long clazzid;
-  private long studentid;
-  private long gradeid;
-  private long courseid;
-  private long score;
+  private Integer id;
+  private Integer examId;
+  private Integer clazzId;
+  private Integer studentId;
+  private Integer gradeId;
+  private Integer courseId;
+  private Integer score;
 
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-
-  public long getExamid() {
-    return examid;
+  public Integer getExamId() {
+    return examId;
   }
 
-  public void setExamid(long examid) {
-    this.examid = examid;
+  public void setExamId(Integer examId) {
+    this.examId = examId;
   }
 
-
-  public long getClazzid() {
-    return clazzid;
+  public Integer getClazzId() {
+    return clazzId;
   }
 
-  public void setClazzid(long clazzid) {
-    this.clazzid = clazzid;
+  public void setClazzId(Integer clazzId) {
+    this.clazzId = clazzId;
   }
 
-
-  public long getStudentid() {
-    return studentid;
+  public Integer getStudentId() {
+    return studentId;
   }
 
-  public void setStudentid(long studentid) {
-    this.studentid = studentid;
+  public void setStudentId(Integer studentId) {
+    this.studentId = studentId;
   }
 
-
-  public long getGradeid() {
-    return gradeid;
+  public Integer getGradeId() {
+    return gradeId;
   }
 
-  public void setGradeid(long gradeid) {
-    this.gradeid = gradeid;
+  public void setGradeId(Integer gradeId) {
+    this.gradeId = gradeId;
   }
 
-
-  public long getCourseid() {
-    return courseid;
+  public Integer getCourseId() {
+    return courseId;
   }
 
-  public void setCourseid(long courseid) {
-    this.courseid = courseid;
+  public void setCourseId(Integer courseId) {
+    this.courseId = courseId;
   }
 
-
-  public long getScore() {
+  public Integer getScore() {
     return score;
   }
 
-  public void setScore(long score) {
+  public void setScore(Integer score) {
     this.score = score;
   }
-
 }

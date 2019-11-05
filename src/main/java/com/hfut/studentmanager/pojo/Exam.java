@@ -1,26 +1,26 @@
 package com.hfut.studentmanager.pojo;
 
 
+import java.sql.Date;
+
 public class Exam {
 
-  private long id;
+  private Integer id;
   private String name;
-  private java.sql.Date time;
+  private Date time;
   private String remark;
-  private long type;
-  private long gradeid;
-  private long clazzid;
-  private long courseid;
+  private Integer type;
+  private Integer gradeId;
+  private Integer clazzId;
+  private Integer courseId;
 
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
-
 
   public String getName() {
     return name;
@@ -30,15 +30,13 @@ public class Exam {
     this.name = name;
   }
 
-
-  public java.sql.Date getTime() {
+  public Date getTime() {
     return time;
   }
 
-  public void setTime(java.sql.Date time) {
+  public void setTime(Date time) {
     this.time = time;
   }
-
 
   public String getRemark() {
     return remark;
@@ -48,40 +46,35 @@ public class Exam {
     this.remark = remark;
   }
 
-
-  public long getType() {
+  public Integer getType() {
     return type;
   }
 
-  public void setType(long type) {
+  public void setType(Integer type) {
     this.type = type;
   }
 
-
-  public long getGradeid() {
-    return gradeid;
+  public Integer getGradeId() {
+    return gradeId;
   }
 
-  public void setGradeid(long gradeid) {
-    this.gradeid = gradeid;
+  public void setGradeId(Integer gradeId) {
+    this.gradeId = gradeId;
   }
 
-
-  public long getClazzid() {
-    return clazzid;
+  public Integer getClazzId() {
+    return clazzId;
   }
 
-  public void setClazzid(long clazzid) {
-    this.clazzid = clazzid;
+  public void setClazzId(Integer clazzId) {
+    this.clazzId = clazzId;
   }
 
-
-  public long getCourseid() {
-    return courseid;
+  public Integer getCourseId() {
+    return courseId;
   }
 
-  public void setCourseid(long courseid) {
-    this.courseid = courseid;
+  public void setCourseId(Integer courseId) {
+    this.courseId = courseId;
   }
-
 }

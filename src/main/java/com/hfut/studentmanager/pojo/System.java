@@ -3,22 +3,20 @@ package com.hfut.studentmanager.pojo;
 
 public class System {
 
-  private long id;
+  private Integer id;
   private String schoolName;
-  private long forbidTeacher;
-  private long forbidStudent;
+  private Integer forbidTeacher;
+  private Integer forbidStudent;
   private String noticeTeacher;
   private String noticeStudent;
 
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
-
 
   public String getSchoolName() {
     return schoolName;
@@ -28,24 +26,21 @@ public class System {
     this.schoolName = schoolName;
   }
 
-
-  public long getForbidTeacher() {
+  public Integer getForbidTeacher() {
     return forbidTeacher;
   }
 
-  public void setForbidTeacher(long forbidTeacher) {
+  public void setForbidTeacher(Integer forbidTeacher) {
     this.forbidTeacher = forbidTeacher;
   }
 
-
-  public long getForbidStudent() {
+  public Integer getForbidStudent() {
     return forbidStudent;
   }
 
-  public void setForbidStudent(long forbidStudent) {
+  public void setForbidStudent(Integer forbidStudent) {
     this.forbidStudent = forbidStudent;
   }
-
 
   public String getNoticeTeacher() {
     return noticeTeacher;
@@ -55,7 +50,6 @@ public class System {
     this.noticeTeacher = noticeTeacher;
   }
 
-
   public String getNoticeStudent() {
     return noticeStudent;
   }
@@ -63,5 +57,4 @@ public class System {
   public void setNoticeStudent(String noticeStudent) {
     this.noticeStudent = noticeStudent;
   }
-
 }

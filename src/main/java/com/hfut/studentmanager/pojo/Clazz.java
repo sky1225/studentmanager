@@ -3,19 +3,17 @@ package com.hfut.studentmanager.pojo;
 
 public class Clazz {
 
-  private long id;
+  private Integer id;
   private String name;
-  private long gradeid;
+  private Integer gradeId;
 
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
-
 
   public String getName() {
     return name;
@@ -25,13 +23,11 @@ public class Clazz {
     this.name = name;
   }
 
-
-  public long getGradeid() {
-    return gradeid;
+  public Integer getGradeId() {
+    return gradeId;
   }
 
-  public void setGradeid(long gradeid) {
-    this.gradeid = gradeid;
+  public void setGradeId(Integer gradeId) {
+    this.gradeId = gradeId;
   }
-
 }
