@@ -1,6 +1,8 @@
 package com.hfut.studentmanager.pojo;
 
 
+import java.sql.Date;
+
 public class Exam {
 
   private long id;
@@ -8,10 +10,9 @@ public class Exam {
   private java.sql.Date time;
   private String remark;
   private long type;
-  private long gradeid;
-  private long clazzid;
-  private long courseid;
-
+  private long gradeId;
+  private long clazzId;
+  private long courseId;
 
   public long getId() {
     return id;
@@ -21,7 +22,6 @@ public class Exam {
     this.id = id;
   }
 
-
   public String getName() {
     return name;
   }
@@ -30,15 +30,13 @@ public class Exam {
     this.name = name;
   }
 
-
-  public java.sql.Date getTime() {
+  public Date getTime() {
     return time;
   }
 
-  public void setTime(java.sql.Date time) {
+  public void setTime(Date time) {
     this.time = time;
   }
-
 
   public String getRemark() {
     return remark;
@@ -48,7 +46,6 @@ public class Exam {
     this.remark = remark;
   }
 
-
   public long getType() {
     return type;
   }
@@ -57,31 +54,27 @@ public class Exam {
     this.type = type;
   }
 
-
-  public long getGradeid() {
-    return gradeid;
+  public long getGradeId() {
+    return gradeId;
   }
 
-  public void setGradeid(long gradeid) {
-    this.gradeid = gradeid;
+  public void setGradeId(long gradeId) {
+    this.gradeId = gradeId;
   }
 
-
-  public long getClazzid() {
-    return clazzid;
+  public long getClazzId() {
+    return clazzId;
   }
 
-  public void setClazzid(long clazzid) {
-    this.clazzid = clazzid;
+  public void setClazzId(long clazzId) {
+    this.clazzId = clazzId;
   }
 
-
-  public long getCourseid() {
-    return courseid;
+  public long getCourseId() {
+    return courseId;
   }
 
-  public void setCourseid(long courseid) {
-    this.courseid = courseid;
+  public void setCourseId(long courseId) {
+    this.courseId = courseId;
   }
-
 }

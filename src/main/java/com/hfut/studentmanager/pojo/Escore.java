@@ -4,13 +4,12 @@ package com.hfut.studentmanager.pojo;
 public class Escore {
 
   private long id;
-  private long examid;
-  private long clazzid;
-  private long studentid;
-  private long gradeid;
-  private long courseid;
+  private long examId;
+  private long clazzId;
+  private long studentId;
+  private long gradeId;
+  private long courseId;
   private long score;
-
 
   public long getId() {
     return id;
@@ -20,51 +19,45 @@ public class Escore {
     this.id = id;
   }
 
-
-  public long getExamid() {
-    return examid;
+  public long getExamId() {
+    return examId;
   }
 
-  public void setExamid(long examid) {
-    this.examid = examid;
+  public void setExamId(long examId) {
+    this.examId = examId;
   }
 
-
-  public long getClazzid() {
-    return clazzid;
+  public long getClazzId() {
+    return clazzId;
   }
 
-  public void setClazzid(long clazzid) {
-    this.clazzid = clazzid;
+  public void setClazzId(long clazzId) {
+    this.clazzId = clazzId;
   }
 
-
-  public long getStudentid() {
-    return studentid;
+  public long getStudentId() {
+    return studentId;
   }
 
-  public void setStudentid(long studentid) {
-    this.studentid = studentid;
+  public void setStudentId(long studentId) {
+    this.studentId = studentId;
   }
 
-
-  public long getGradeid() {
-    return gradeid;
+  public long getGradeId() {
+    return gradeId;
   }
 
-  public void setGradeid(long gradeid) {
-    this.gradeid = gradeid;
+  public void setGradeId(long gradeId) {
+    this.gradeId = gradeId;
   }
 
-
-  public long getCourseid() {
-    return courseid;
+  public long getCourseId() {
+    return courseId;
   }
 
-  public void setCourseid(long courseid) {
-    this.courseid = courseid;
+  public void setCourseId(long courseId) {
+    this.courseId = courseId;
   }
-
 
   public long getScore() {
     return score;
@@ -73,5 +66,4 @@ public class Escore {
   public void setScore(long score) {
     this.score = score;
   }
-
 }

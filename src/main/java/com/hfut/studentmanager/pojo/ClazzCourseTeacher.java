@@ -4,11 +4,10 @@ package com.hfut.studentmanager.pojo;
 public class ClazzCourseTeacher {
 
   private long id;
-  private long clazzid;
-  private long gradeid;
-  private long courseid;
-  private long teacherid;
-
+  private long clazzId;
+  private long gradeId;
+  private long courseId;
+  private long teacherId;
 
   public long getId() {
     return id;
@@ -18,40 +17,35 @@ public class ClazzCourseTeacher {
     this.id = id;
   }
 
-
-  public long getClazzid() {
-    return clazzid;
+  public long getClazzId() {
+    return clazzId;
   }
 
-  public void setClazzid(long clazzid) {
-    this.clazzid = clazzid;
+  public void setClazzId(long clazzId) {
+    this.clazzId = clazzId;
   }
 
-
-  public long getGradeid() {
-    return gradeid;
+  public long getGradeId() {
+    return gradeId;
   }
 
-  public void setGradeid(long gradeid) {
-    this.gradeid = gradeid;
+  public void setGradeId(long gradeId) {
+    this.gradeId = gradeId;
   }
 
-
-  public long getCourseid() {
-    return courseid;
+  public long getCourseId() {
+    return courseId;
   }
 
-  public void setCourseid(long courseid) {
-    this.courseid = courseid;
+  public void setCourseId(long courseId) {
+    this.courseId = courseId;
   }
 
-
-  public long getTeacherid() {
-    return teacherid;
+  public long getTeacherId() {
+    return teacherId;
   }
 
-  public void setTeacherid(long teacherid) {
-    this.teacherid = teacherid;
+  public void setTeacherId(long teacherId) {
+    this.teacherId = teacherId;
   }
-
 }

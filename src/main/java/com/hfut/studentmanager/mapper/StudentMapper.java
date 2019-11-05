@@ -21,14 +21,14 @@ public interface StudentMapper {
     @Select("select * from student")
     public List<Student> findAllStudent();
 
-    @Select("select * from student where clazzid=#{clazzid}")
-    public List<Student> findStudentByClazzid(String clazzid);
+    @Select("select * from student where clazzId=#{clazzId}")
+    public List<Student> findStudentByClazzId(String clazzId);
 
-    @Select("select * from student where gradeid=#{gradeid}")
-    public List<Student> findStudentByGradeid(String gradeid);
+    @Select("select * from student where gradeId=#{gradeId}")
+    public List<Student> findStudentByGradeId(String gradeId);
 
-    @Select("insert into student(number, name, sex, phone, qq, clazzid, gradeid) values" +
-            "#{number}, #{name}, #{sex}, #{phone}, #{qq}, #{clazzid}, #{gradeid}")
+    @Select("insert into student(number, name, sex, phone, qq, clazzId, gradeId) values" +
+            "#{number}, #{name}, #{sex}, #{phone}, #{qq}, #{clazzId}, #{gradeId}")
     public boolean insertStudent(Student student);
 
     @Select("update student set phone=#{phone}, qq=#{qq}")

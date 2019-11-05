@@ -18,4 +18,8 @@ public class UserService {
         }
         return user;
     }
+
+    public boolean addUser(User user){
+        return userMapper.insertUser(user);
+    }
 }

@@ -9,8 +9,8 @@ public class Student {
   private String sex;
   private String phone;
   private String qq;
-  private long clazzid;
-  private long gradeid;
+  private long clazzId;
+  private long gradeId;
 
 
   public long getId() {
@@ -66,22 +66,19 @@ public class Student {
     this.qq = qq;
   }
 
-
-  public long getClazzid() {
-    return clazzid;
+  public long getClazzId() {
+    return clazzId;
   }
 
-  public void setClazzid(long clazzid) {
-    this.clazzid = clazzid;
+  public void setClazzId(long clazzId) {
+    this.clazzId = clazzId;
   }
 
-
-  public long getGradeid() {
-    return gradeid;
+  public long getGradeId() {
+    return gradeId;
   }
 
-  public void setGradeid(long gradeid) {
-    this.gradeid = gradeid;
+  public void setGradeId(long gradeId) {
+    this.gradeId = gradeId;
   }
-
 }

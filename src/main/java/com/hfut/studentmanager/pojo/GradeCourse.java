@@ -4,8 +4,8 @@ package com.hfut.studentmanager.pojo;
 public class GradeCourse {
 
   private long id;
-  private long gradeid;
-  private long courseid;
+  private long gradeId;
+  private long courseId;
 
 
   public long getId() {
@@ -16,22 +16,19 @@ public class GradeCourse {
     this.id = id;
   }
 
-
-  public long getGradeid() {
-    return gradeid;
+  public long getGradeId() {
+    return gradeId;
   }
 
-  public void setGradeid(long gradeid) {
-    this.gradeid = gradeid;
+  public void setGradeId(long gradeId) {
+    this.gradeId = gradeId;
   }
 
-
-  public long getCourseid() {
-    return courseid;
+  public long getCourseId() {
+    return courseId;
   }
 
-  public void setCourseid(long courseid) {
-    this.courseid = courseid;
+  public void setCourseId(long courseId) {
+    this.courseId = courseId;
   }
-
 }

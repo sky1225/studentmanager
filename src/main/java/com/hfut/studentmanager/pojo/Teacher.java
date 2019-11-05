@@ -9,7 +9,6 @@ public class Teacher {
   private String sex;
   private String phone;
   private String qq;
-  private String photo;
 
 
   public long getId() {
@@ -63,15 +62,6 @@ public class Teacher {
 
   public void setQq(String qq) {
     this.qq = qq;
-  }
-
-
-  public String getPhoto() {
-    return photo;
-  }
-
-  public void setPhoto(String photo) {
-    this.photo = photo;
   }
 
 }

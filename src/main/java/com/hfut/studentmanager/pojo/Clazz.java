@@ -5,7 +5,7 @@ public class Clazz {
 
   private long id;
   private String name;
-  private long gradeid;
+  private long gradeId;
 
 
   public long getId() {
@@ -25,13 +25,11 @@ public class Clazz {
     this.name = name;
   }
 
-
-  public long getGradeid() {
-    return gradeid;
+  public long getGradeId() {
+    return gradeId;
   }
 
-  public void setGradeid(long gradeid) {
-    this.gradeid = gradeid;
+  public void setGradeId(long gradeId) {
+    this.gradeId = gradeId;
   }
-
 }
