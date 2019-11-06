@@ -15,6 +15,20 @@ public class Student {
   private Integer clazzId;
   private Integer gradeId;
 
+  @Override
+  public String toString() {
+    return "Student{" +
+            "id=" + id +
+            ", number='" + number + '\'' +
+            ", name='" + name + '\'' +
+            ", sex='" + sex + '\'' +
+            ", phone='" + phone + '\'' +
+            ", qq='" + qq + '\'' +
+            ", clazzId=" + clazzId +
+            ", gradeId=" + gradeId +
+            '}';
+  }
+
   public Integer getId() {
     return id;
   }

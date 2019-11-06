@@ -28,6 +28,10 @@ public class SystemController {
     private ClazzService clazzService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private GradeService gradeService;
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping("/list")
     public Message listAll(HttpServletRequest request, @RequestParam("method") String method){
@@ -47,51 +51,63 @@ public class SystemController {
                 List<Map<String, Object>> examList = examService.listAllExam();
                 return ResultUtils.success(examList);
             case "listAllClazz":
-                List<Clazz> classList = clazzService.listAllClazz();
-                return ResultUtils.success(classList);
+                List<Map<String, Object>> clazzList = clazzService.listAllClazz();
+                return ResultUtils.success(clazzList);
+            case "listAllGrade":
+                List<Map<String, Object>> gradeList = gradeService.listAllGrade();
+                return ResultUtils.success(gradeList);
+            case "listAllCourse":
+                List<Course> courseList = courseService.listAllCourse();
+                return ResultUtils.success(courseList);
             default:
                 return ResultUtils.error(404, "请求参数method错误");
         }
     }
 
+    //todo 存在bug
     @PostMapping("/add")
     public Message add(@RequestBody Map<String, Object> map){
         System.out.println(map.get("student"));
         User user = new User();
         String method = (String) map.get("method");
-        switch (method){
-            case "addStudent":
-                JSONObject jsonObject = JSONObject.fromObject(map.get("student"));
-                JSONStudent jsonStudent = (JSONStudent) JSONObject.toBean(jsonObject, JSONStudent.class);
-                user = new User();
-                user.setAccount(jsonStudent.getNumber());
-                user.setPassword("111111");
-                user.setType(2);
-                Message addStudentResult = studentService.addStudent(jsonStudent);
-                if (addStudentResult.getCode().equals("200")){
-                    Message addUserResult = userService.addUser(user);
-                    if (addUserResult.getCode().equals("200")){
-                        return ResultUtils.success();
-                    }else {
-                        return addUserResult;
+        try {
+            switch (method) {
+                case "addStudent":
+                    JSONObject jsonObject = JSONObject.fromObject(map.get("student"));
+                    JSONStudent jsonStudent = (JSONStudent) JSONObject.toBean(jsonObject, JSONStudent.class);
+                    System.out.println(jsonStudent);
+                    user = new User();
+                    user.setAccount(jsonStudent.getNumber());
+                    user.setPassword("111111");
+                    user.setType(2);
+                    Message addStudentResult = studentService.addStudent(jsonStudent);
+                    if (addStudentResult.getCode().equals("200")) {
+                        Message addUserResult = userService.addUser(user);
+                        if (addUserResult.getCode().equals("200")) {
+                            return ResultUtils.success();
+                        } else {
+                            return addUserResult;
+                        }
+                    } else {
+                        return addStudentResult;
                     }
-                }else {
-                    return addStudentResult;
-                }
-            case "addTeacher":
-                Teacher teacher = (Teacher) map.get("teacher");
-                user.setAccount(teacher.getNumber());
-                user.setPassword("111111");
-                user.setType(3);
-                if (teacherService.addTeacher(teacher)){
+                case "addTeacher":
+                    Teacher teacher = (Teacher) map.get("teacher");
+                    user.setAccount(teacher.getNumber());
+                    user.setPassword("111111");
+                    user.setType(3);
+                    if (teacherService.addTeacher(teacher)) {
 
-                    return ResultUtils.success();
-                }else {
-                    return ResultUtils.error(404, "教师信息添加失败");
-                }
-            default:
-                return ResultUtils.error(404, "添加失败，method参数格式错误");
-
+                        return ResultUtils.success();
+                    } else {
+                        return ResultUtils.error(404, "教师信息添加失败");
+                    }
+                default:
+                    return ResultUtils.error(404, "添加失败，method参数格式错误");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtils.error(404, "添加失败");
         }
     }
 

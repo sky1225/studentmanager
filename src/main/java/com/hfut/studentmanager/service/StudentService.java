@@ -47,6 +47,7 @@ public class StudentService {
         student.setSex(jsonStudent.getSex());
         student.setClazzId(clazzId.get(0));
         student.setGradeId(gradeId.get(0));
+        System.out.println("student:" + student);
         if (studentMapper.insertStudent(student)){
             return ResultUtils.success("学生信息添加成功");
         }

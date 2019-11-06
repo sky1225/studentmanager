@@ -29,8 +29,8 @@ public class ExamService {
     public List<Map<String, Object>> listAllExam(){
         List<Exam> examList = examMapper.findAllExam();
         List<Map<String, Object>> result = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
         for (Exam exam: examList){
+            Map<String, Object> map = new HashMap<>();
             map.put("id", exam.getId());
             map.put("name", exam.getName());
             map.put("time", exam.getTime());

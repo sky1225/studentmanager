@@ -10,6 +10,20 @@ public class JSONStudent {
     private String clazz;
     private String grade;
 
+    @Override
+    public String toString() {
+        return "JSONStudent{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", phone='" + phone + '\'' +
+                ", qq='" + qq + '\'' +
+                ", clazz='" + clazz + '\'' +
+                ", grade='" + grade + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
