@@ -16,6 +16,10 @@ public interface CourseMapper {
     @Select("select name from course where id=#{id}")
     public String findNameById(Integer id);
 
+
+    @Select("select id from course where name=#{name}")
+    public Integer findIdByName(String name);
+
     @Select("select * from course")
     public List<Course> findAllCourse();
 

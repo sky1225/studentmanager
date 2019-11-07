@@ -22,7 +22,7 @@ public interface GradeCourseMapper {
     @Select("select * from grade_course where courseId=#{courseId}")
     public List<GradeCourse> findGradeCourseByCourseId(Integer courseId);
 
-    @Insert("insert to grade_course(gradeId, courseId) values " +
+    @Insert("insert into grade_course(gradeId, courseId) values " +
             "(#{gradeId}, #{courseId})")
     public boolean insertGradeCourse(GradeCourse gradeCourse);
 

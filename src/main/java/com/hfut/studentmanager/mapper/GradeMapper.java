@@ -24,9 +24,9 @@ public interface GradeMapper {
     public String findNameById(Integer id);
 
     @Select("select id from grade where name=#{name}")
-    public List<Integer> findIdByName(String name);
+    public Integer findIdByName(String name);
 
-    @Insert("insert into grade(name) values (#{grade})")
+    @Insert("insert into grade(name) values (#{name})")
     public boolean insertGrade(Grade grade);
 
     @Delete("delete from grade where id=#{id}")

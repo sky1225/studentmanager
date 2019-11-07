@@ -32,11 +32,11 @@ public class StudentService {
 
     public Message addStudent(JSONStudent jsonStudent){
         Message message = new Message();
-        List<Integer> gradeId = gradeMapper.findIdByName(jsonStudent.getGrade());
-        if (gradeId == null || gradeId.size() == 0){
+        Integer gradeId = gradeMapper.findIdByName(jsonStudent.getGrade());
+        if (gradeId == null){
             return ResultUtils.error(404, "无此学生所在年级，添加学生信息失败");
         }
-        List<Integer> clazzId = clazzMapper.findIdByNameAndGradeId(jsonStudent.getClazz(), gradeId.get(0));
+        List<Integer> clazzId = clazzMapper.findIdByNameAndGradeId(jsonStudent.getClazz(), gradeId);
         if (clazzId == null || clazzId.size() == 0){
             return ResultUtils.error(404, "无此学生所在年级下的班级，添加学生信息失败");
         }
@@ -46,7 +46,7 @@ public class StudentService {
         student.setPhone(jsonStudent.getPhone());
         student.setSex(jsonStudent.getSex());
         student.setClazzId(clazzId.get(0));
-        student.setGradeId(gradeId.get(0));
+        student.setGradeId(gradeId);
         System.out.println("student:" + student);
         if (studentMapper.insertStudent(student)){
             return ResultUtils.success("学生信息添加成功");

@@ -4,9 +4,12 @@ import com.hfut.studentmanager.pojo.*;
 import com.hfut.studentmanager.service.*;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
+import com.hfut.studentmanager.utils.jsonBean.JSONGrade;
 import com.hfut.studentmanager.utils.jsonBean.JSONStudent;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +35,7 @@ public class SystemController {
     private GradeService gradeService;
     @Autowired
     private CourseService courseService;
+
 
     @GetMapping("/list")
     public Message listAll(HttpServletRequest request, @RequestParam("method") String method){
@@ -65,18 +69,19 @@ public class SystemController {
     }
 
     //todo 存在bug
+    @Transactional
     @PostMapping("/add")
     public Message add(@RequestBody Map<String, Object> map){
         System.out.println(map.get("student"));
         User user = new User();
         String method = (String) map.get("method");
+        Message result;
         try {
             switch (method) {
                 case "addStudent":
-                    JSONObject jsonObject = JSONObject.fromObject(map.get("student"));
-                    JSONStudent jsonStudent = (JSONStudent) JSONObject.toBean(jsonObject, JSONStudent.class);
+                    JSONObject jsonObjectStudent = JSONObject.fromObject(map.get("student"));
+                    JSONStudent jsonStudent = (JSONStudent) JSONObject.toBean(jsonObjectStudent, JSONStudent.class);
                     System.out.println(jsonStudent);
-                    user = new User();
                     user.setAccount(jsonStudent.getNumber());
                     user.setPassword("111111");
                     user.setType(2);
@@ -97,10 +102,23 @@ public class SystemController {
                     user.setPassword("111111");
                     user.setType(3);
                     if (teacherService.addTeacher(teacher)) {
-
                         return ResultUtils.success();
                     } else {
                         return ResultUtils.error(404, "教师信息添加失败");
+                    }
+                case "addCourse":
+                    JSONObject jsonObjectCourse = JSONObject.fromObject(map.get("course"));
+                    Course course = (Course) JSONObject.toBean(jsonObjectCourse, Course.class);
+                    return courseService.addCourse(course);
+                case "addGrade":
+                    JSONObject jsonObjectGrade = JSONObject.fromObject(map.get("grade"));
+                    JSONGrade jsonGrade = (JSONGrade) JSONObject.toBean(jsonObjectGrade, JSONGrade.class);
+                    System.out.println(jsonGrade);
+                    result = gradeService.addGrade(jsonGrade);
+                    if (result.getCode().equals(404)){
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    }else {
+                        return result;
                     }
                 default:
                     return ResultUtils.error(404, "添加失败，method参数格式错误");
