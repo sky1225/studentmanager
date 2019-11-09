@@ -6,6 +6,7 @@ import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
 import com.hfut.studentmanager.utils.jsonBean.JSONGrade;
 import com.hfut.studentmanager.utils.jsonBean.JSONStudent;
+import com.hfut.studentmanager.utils.jsonBean.JSONTeacher;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +50,8 @@ public class SystemController {
                 List<Student> studentList = studentService.listAllStudent();
                 return ResultUtils.success(studentList);
             case "listAllTeacher":
-                List<Teacher> teacherList = teacherService.listAllTeacher();
+                List<Map<String, Object>> teacherList = teacherService.listAllTeacher();
+//                Map<String, Object>
                 return ResultUtils.success(teacherList);
             case "listAllExam":
                 List<Map<String, Object>> examList = examService.listAllExam();
@@ -72,7 +74,6 @@ public class SystemController {
     @Transactional
     @PostMapping("/add")
     public Message add(@RequestBody Map<String, Object> map){
-        System.out.println(map.get("student"));
         User user = new User();
         String method = (String) map.get("method");
         Message result;
@@ -81,8 +82,8 @@ public class SystemController {
                 case "addStudent":
                     JSONObject jsonObjectStudent = JSONObject.fromObject(map.get("student"));
                     JSONStudent jsonStudent = (JSONStudent) JSONObject.toBean(jsonObjectStudent, JSONStudent.class);
-                    System.out.println(jsonStudent);
                     user.setAccount(jsonStudent.getNumber());
+                    user.setName(jsonStudent.getName());
                     user.setPassword("111111");
                     user.setType(2);
                     Message addStudentResult = studentService.addStudent(jsonStudent);
@@ -97,14 +98,23 @@ public class SystemController {
                         return addStudentResult;
                     }
                 case "addTeacher":
-                    Teacher teacher = (Teacher) map.get("teacher");
-                    user.setAccount(teacher.getNumber());
+                    JSONObject jsonObjectTeacher = JSONObject.fromObject(map.get("teacher"));
+                    JSONTeacher jsonTeacher = (JSONTeacher) JSONObject.toBean(jsonObjectTeacher, JSONTeacher.class);
+
+                    user.setAccount(jsonTeacher.getNumber());
                     user.setPassword("111111");
+                    user.setName(jsonTeacher.getName());
                     user.setType(3);
-                    if (teacherService.addTeacher(teacher)) {
-                        return ResultUtils.success();
+
+                    Message addTeacherResult = teacherService.addTeacher(jsonTeacher);
+                    if (addTeacherResult.getCode().equals("200")) {
+                        Message addUserResult = userService.addUser(user);
+                        if (addUserResult.getCode().equals("200")){
+                            return ResultUtils.success();
+                        }
+                        return addUserResult;
                     } else {
-                        return ResultUtils.error(404, "教师信息添加失败");
+                        return addTeacherResult;
                     }
                 case "addCourse":
                     JSONObject jsonObjectCourse = JSONObject.fromObject(map.get("course"));
@@ -113,19 +123,30 @@ public class SystemController {
                 case "addGrade":
                     JSONObject jsonObjectGrade = JSONObject.fromObject(map.get("grade"));
                     JSONGrade jsonGrade = (JSONGrade) JSONObject.toBean(jsonObjectGrade, JSONGrade.class);
-                    System.out.println(jsonGrade);
                     result = gradeService.addGrade(jsonGrade);
                     if (result.getCode().equals(404)){
                         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     }else {
                         return result;
                     }
+//                case "add"
                 default:
                     return ResultUtils.error(404, "添加失败，method参数格式错误");
             }
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtils.error(404, "添加失败");
+        }
+    }
+
+    @GetMapping("/delete")
+    public Message delete(@RequestParam("method") String method, @RequestParam("id") String id){
+        switch (method){
+            case "deleteTeacher":
+                return teacherService.deleteTeacher(Integer.parseInt(id));
+
+            default:
+                return ResultUtils.error(404, "method格式错误");
         }
     }
 

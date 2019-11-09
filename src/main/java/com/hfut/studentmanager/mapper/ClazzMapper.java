@@ -1,10 +1,7 @@
 package com.hfut.studentmanager.mapper;
 
 import com.hfut.studentmanager.pojo.Clazz;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,7 +20,7 @@ public interface ClazzMapper {
     public String findNameById(Integer id);
 
     @Select("select id from clazz where name=#{name} and gradeId=#{gradeId}")
-    public List<Integer> findIdByNameAndGradeId(String name, Integer gradeId);
+    public Integer findIdByNameAndGradeId(@Param("name") String name, @Param("gradeId")Integer gradeId);
 
     @Insert("insert into clazz(name, gradeId) values (#{name}, #{gradeId})")
     public boolean insertClazz(Clazz clazz);

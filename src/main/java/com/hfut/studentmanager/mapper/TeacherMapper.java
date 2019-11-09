@@ -17,7 +17,10 @@ public interface TeacherMapper {
     public List<Teacher> findAllTeacher();
 
     @Select("select * from teacher where id=#{id}")
-    public List<Teacher> findTeacherById(Integer id);
+    public Teacher findTeacherById(Integer id);
+
+    @Select("select id where number=#{number}")
+    public Integer findIdByNumber(String number);
 
     @Insert("insert into teacher(number, name, sex, phone, qq) values" +
             "(#{number}, #{name}, #{sex}, #{phone}, #{qq})")

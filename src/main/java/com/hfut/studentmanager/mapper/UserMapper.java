@@ -23,4 +23,8 @@ public interface UserMapper {
     @Delete("delete from user where id=#{id}")
     public boolean deleteUser(Integer id);
 
+    @Delete("delete from user where account=#{account}")
+    public boolean deleteUserByAccount(String account);
+
+
 }

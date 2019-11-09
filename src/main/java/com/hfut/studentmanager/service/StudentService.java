@@ -36,8 +36,9 @@ public class StudentService {
         if (gradeId == null){
             return ResultUtils.error(404, "无此学生所在年级，添加学生信息失败");
         }
-        List<Integer> clazzId = clazzMapper.findIdByNameAndGradeId(jsonStudent.getClazz(), gradeId);
-        if (clazzId == null || clazzId.size() == 0){
+        System.out.println(jsonStudent.getClazz() + gradeId);
+        Integer clazzId = clazzMapper.findIdByNameAndGradeId(jsonStudent.getClazz(), gradeId);
+        if (clazzId == null){
             return ResultUtils.error(404, "无此学生所在年级下的班级，添加学生信息失败");
         }
         student.setNumber(jsonStudent.getNumber());
@@ -45,7 +46,7 @@ public class StudentService {
         student.setQq(jsonStudent.getQq());
         student.setPhone(jsonStudent.getPhone());
         student.setSex(jsonStudent.getSex());
-        student.setClazzId(clazzId.get(0));
+        student.setClazzId(clazzId);
         student.setGradeId(gradeId);
         System.out.println("student:" + student);
         if (studentMapper.insertStudent(student)){
