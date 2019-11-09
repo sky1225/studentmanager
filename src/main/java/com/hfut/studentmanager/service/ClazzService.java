@@ -3,6 +3,9 @@ package com.hfut.studentmanager.service;
 import com.hfut.studentmanager.mapper.ClazzMapper;
 import com.hfut.studentmanager.mapper.GradeMapper;
 import com.hfut.studentmanager.pojo.Clazz;
+import com.hfut.studentmanager.utils.Message;
+import com.hfut.studentmanager.utils.ResultUtils;
+import com.hfut.studentmanager.utils.jsonBean.JSONClazz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +35,18 @@ public class ClazzService {
         return result;
     }
 
-    public boolean addClazz(Clazz clazz){
-        return clazzMapper.insertClazz(clazz);
+    public Message addClazz(JSONClazz jsonClazz){
+        Clazz clazz = new Clazz();
+        clazz.setName(jsonClazz.getName());
+        Integer gradeId = gradeMapper.findIdByName(jsonClazz.getGrade());
+        if (gradeId == null){
+            return ResultUtils.error(404, "不存在年级：" + jsonClazz.getGrade());
+        }
+        clazz.setGradeId(gradeId);
+        if (clazzMapper.insertClazz(clazz)){
+            return ResultUtils.success();
+        }
+        return ResultUtils.error(404, "插入班级失败");
     }
 
     public boolean deleteClazz(Integer id){

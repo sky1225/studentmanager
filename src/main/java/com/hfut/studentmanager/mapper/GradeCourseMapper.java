@@ -1,10 +1,7 @@
 package com.hfut.studentmanager.mapper;
 
 import com.hfut.studentmanager.pojo.GradeCourse;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +9,10 @@ import java.util.List;
 @Mapper
 @Repository
 public interface GradeCourseMapper {
+
+    @Select("select * from grade_course where gradeId=#{gradeId} and courseId=#{courseId}")
+    public GradeCourse findGradeCourseByGradeIdAndCourseId(@Param("gradeId") Integer gradeId, @Param("courseId")Integer courseId);
+
 
     @Select("select * from grade_course")
     public List<GradeCourse> findAllGradeCourse();

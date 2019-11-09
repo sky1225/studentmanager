@@ -66,6 +66,9 @@ public class TeacherService {
     }
 
     public Message addTeacher(JSONTeacher jsonTeacher){
+        if (teacherMapper.findIdByNumber(jsonTeacher.getNumber()) != null){
+            return ResultUtils.error(404, "该教师工号已存在");
+        }
         Teacher teacher = new Teacher();
         teacher.setName(jsonTeacher.getName());
         teacher.setNumber(jsonTeacher.getNumber());

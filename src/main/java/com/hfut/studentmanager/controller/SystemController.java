@@ -4,9 +4,7 @@ import com.hfut.studentmanager.pojo.*;
 import com.hfut.studentmanager.service.*;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
-import com.hfut.studentmanager.utils.jsonBean.JSONGrade;
-import com.hfut.studentmanager.utils.jsonBean.JSONStudent;
-import com.hfut.studentmanager.utils.jsonBean.JSONTeacher;
+import com.hfut.studentmanager.utils.jsonBean.*;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +49,6 @@ public class SystemController {
                 return ResultUtils.success(studentList);
             case "listAllTeacher":
                 List<Map<String, Object>> teacherList = teacherService.listAllTeacher();
-//                Map<String, Object>
                 return ResultUtils.success(teacherList);
             case "listAllExam":
                 List<Map<String, Object>> examList = examService.listAllExam();
@@ -98,6 +95,7 @@ public class SystemController {
                         return addStudentResult;
                     }
                 case "addTeacher":
+                    //todo 有bug
                     JSONObject jsonObjectTeacher = JSONObject.fromObject(map.get("teacher"));
                     JSONTeacher jsonTeacher = (JSONTeacher) JSONObject.toBean(jsonObjectTeacher, JSONTeacher.class);
 
@@ -129,7 +127,24 @@ public class SystemController {
                     }else {
                         return result;
                     }
-//                case "add"
+                case "addClazz":
+                    JSONObject jsonObjectClazz = JSONObject.fromObject(map.get("clazz"));
+                    JSONClazz jsonClazz = (JSONClazz) JSONObject.toBean(jsonObjectClazz, JSONClazz.class);
+                    result = clazzService.addClazz(jsonClazz);
+                    if (result.getCode().equals(404)){
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    }else {
+                        return result;
+                    }
+                case "addExam":
+                    JSONObject jsonObjectExam = JSONObject.fromObject(map.get("exam"));
+                    JSONExam jsonExam = (JSONExam) JSONObject.toBean(jsonObjectExam, JSONExam.class);
+                    result = examService.addExam(jsonExam);
+                    if (result.getCode().equals(404)){
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    }else {
+                        return result;
+                    }
                 default:
                     return ResultUtils.error(404, "添加失败，method参数格式错误");
             }
