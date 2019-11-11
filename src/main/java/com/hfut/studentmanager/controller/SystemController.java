@@ -68,7 +68,6 @@ public class SystemController {
         }
     }
 
-    //todo 存在bug
     @Transactional
     @PostMapping("/add")
     public Message add(@RequestBody Map<String, Object> map){
@@ -96,10 +95,9 @@ public class SystemController {
                         return addStudentResult;
                     }
                 case "addTeacher":
-                    //todo 有bug
                     JSONObject jsonObjectTeacher = JSONObject.fromObject(map.get("teacher"));
 
-                    Map<String, Class> classMap = new HashMap<String, Class>();
+                    Map<String, Class> classMap = new HashMap<>();
                     classMap.put("courses", JSONCourse.class);
                     JSONTeacher jsonTeacher = (JSONTeacher) JSONObject.toBean(jsonObjectTeacher, JSONTeacher.class, classMap);
                     user.setAccount(jsonTeacher.getNumber());
@@ -125,7 +123,7 @@ public class SystemController {
                     JSONObject jsonObjectGrade = JSONObject.fromObject(map.get("grade"));
                     JSONGrade jsonGrade = (JSONGrade) JSONObject.toBean(jsonObjectGrade, JSONGrade.class);
                     result = gradeService.addGrade(jsonGrade);
-                    if (result.getCode().equals(404)){
+                    if (result.getCode().equals("404")){
                         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     }else {
                         return result;
@@ -134,7 +132,7 @@ public class SystemController {
                     JSONObject jsonObjectClazz = JSONObject.fromObject(map.get("clazz"));
                     JSONClazz jsonClazz = (JSONClazz) JSONObject.toBean(jsonObjectClazz, JSONClazz.class);
                     result = clazzService.addClazz(jsonClazz);
-                    if (result.getCode().equals(404)){
+                    if (result.getCode().equals("404")){
                         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     }else {
                         return result;
@@ -143,7 +141,7 @@ public class SystemController {
                     JSONObject jsonObjectExam = JSONObject.fromObject(map.get("exam"));
                     JSONExam jsonExam = (JSONExam) JSONObject.toBean(jsonObjectExam, JSONExam.class);
                     result = examService.addExam(jsonExam);
-                    if (result.getCode().equals(404)){
+                    if (result.getCode().equals("404")){
                         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     }else {
                         return result;
@@ -168,7 +166,7 @@ public class SystemController {
         }
     }
 
-    public Message loginOut(HttpServletRequest request){
+    private Message loginOut(HttpServletRequest request){
         request.getSession().removeAttribute("user");
         return ResultUtils.success();
     }
