@@ -8,14 +8,13 @@ import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
 import com.hfut.studentmanager.utils.jsonBean.JSONCourse;
 import com.hfut.studentmanager.utils.jsonBean.JSONTeacher;
+import net.sf.ezmorph.bean.MorphDynaBean;
 import net.sf.json.JSON;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TeacherService {
@@ -32,6 +31,8 @@ public class TeacherService {
     private UserMapper userMapper;
     @Autowired
     private CourseMapper courseMapper;
+    @Autowired
+    private GradeCourseMapper gradeCourseMapper;
 
     public List<Map<String, Object>> listAllTeacher(){
         List<Teacher> teacherList = teacherMapper.findAllTeacher();
@@ -65,6 +66,7 @@ public class TeacherService {
         return result;
     }
 
+
     public Message addTeacher(JSONTeacher jsonTeacher){
         if (teacherMapper.findIdByNumber(jsonTeacher.getNumber()) != null){
             return ResultUtils.error(404, "该教师工号已存在");
@@ -84,6 +86,13 @@ public class TeacherService {
             if (gradeId == null){
                 return ResultUtils.error(404, "‘" + course.getGrade() + "’不存在");
             }
+            Integer courseId = courseMapper.findIdByName(course.getCourse());
+            if (courseId == null){
+                return ResultUtils.error(404, "不存在课程‘" + course.getCourse() + "’");
+            }
+            if (gradeCourseMapper.findGradeCourseByGradeIdAndCourseId(gradeId, courseId) == null){
+                return ResultUtils.error(404, course.getGrade() + "不存在课程‘" + course.getCourse() + "’");
+            }
             Integer clazzId = clazzMapper.findIdByNameAndGradeId(course.getClazz(), gradeId);
             if (clazzId == null){
                 return ResultUtils.error(404, "‘" + course.getGrade() + course.getClazz() + "’不存在");
@@ -93,6 +102,7 @@ public class TeacherService {
             clazzCourseTeacher.setClazzId(clazzId);
             clazzCourseTeacher.setGradeId(gradeId);
             clazzCourseTeacher.setTeacherId(teacherId);
+            clazzCourseTeacher.setCourseId(courseId);
             if (!clazzCourseTeacherMapper.insertClazzCourseTeacher(clazzCourseTeacher)){
                 return ResultUtils.error(404, "插入该教师对应课程‘" + course.getCourse() + "’失败");
             }

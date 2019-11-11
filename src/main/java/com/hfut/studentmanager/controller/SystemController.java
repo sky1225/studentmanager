@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.System;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,8 +98,10 @@ public class SystemController {
                 case "addTeacher":
                     //todo 有bug
                     JSONObject jsonObjectTeacher = JSONObject.fromObject(map.get("teacher"));
-                    JSONTeacher jsonTeacher = (JSONTeacher) JSONObject.toBean(jsonObjectTeacher, JSONTeacher.class);
 
+                    Map<String, Class> classMap = new HashMap<String, Class>();
+                    classMap.put("courses", JSONCourse.class);
+                    JSONTeacher jsonTeacher = (JSONTeacher) JSONObject.toBean(jsonObjectTeacher, JSONTeacher.class, classMap);
                     user.setAccount(jsonTeacher.getNumber());
                     user.setPassword("111111");
                     user.setName(jsonTeacher.getName());
