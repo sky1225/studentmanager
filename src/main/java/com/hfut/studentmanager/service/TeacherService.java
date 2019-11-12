@@ -13,6 +13,8 @@ import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.*;
 
@@ -67,8 +69,10 @@ public class TeacherService {
     }
 
 
+    @Transactional
     public Message addTeacher(JSONTeacher jsonTeacher){
         if (teacherMapper.findIdByNumber(jsonTeacher.getNumber()) != null){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "该教师工号已存在");
         }
         Teacher teacher = new Teacher();
@@ -78,6 +82,7 @@ public class TeacherService {
         teacher.setSex(jsonTeacher.getSex());
         teacher.setQq(jsonTeacher.getQq());
         if (!teacherMapper.insertTeacher(teacher)){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "插入教师失败");
         }
         List<JSONCourse> courseList = jsonTeacher.getCourses();
@@ -104,17 +109,29 @@ public class TeacherService {
             clazzCourseTeacher.setTeacherId(teacherId);
             clazzCourseTeacher.setCourseId(courseId);
             if (!clazzCourseTeacherMapper.insertClazzCourseTeacher(clazzCourseTeacher)){
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return ResultUtils.error(404, "插入该教师对应课程‘" + course.getCourse() + "’失败");
             }
         }
         return ResultUtils.success("插入教师成功");
     }
 
+    @Transactional
     public Message deleteTeacher(Integer id){
         Teacher teacher = teacherMapper.findTeacherById(id);
+        if(teacher == null){
+            return ResultUtils.error(404, "要删除的教师不存在");
+        }
+        for (ClazzCourseTeacher clazzCourseTeacher: clazzCourseTeacherMapper.findClazzCourseTeacherByTeacherId(id)){
+            if (!clazzCourseTeacherMapper.deleteClazzCourseTeacher(clazzCourseTeacher.getId())){
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                return ResultUtils.error(404, "删除教师所教课程'" + courseMapper.findNameById(clazzCourseTeacher.getCourseId()) + "'失败");
+            }
+        }
         if (userMapper.deleteUserByAccount(teacher.getNumber()) && teacherMapper.deleteTeacher(id)){
             return ResultUtils.success();
         }
+        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return ResultUtils.error(404, "删除失败");
     }
 }

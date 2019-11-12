@@ -35,4 +35,7 @@ public interface ClazzCourseTeacherMapper {
     @Delete("delete from clazz_course_teacher where id=#{id}")
     public boolean deleteClazzCourseTeacher(Integer id);
 
+    @Delete("delete from clazz_course_teacher where gradeId=#{gradeId}")
+    public boolean deleteClazzCourseTeacherByGradeId(Integer gradeId);
+
 }

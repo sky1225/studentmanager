@@ -10,6 +10,9 @@ import java.util.List;
 @Repository
 public interface ClazzMapper {
 
+    @Select("select * from clazz where id=#{id}")
+    public Clazz findClazzById(Integer id);
+
     @Select("select * from clazz")
     public List<Clazz> findAllClazz();
 
@@ -27,4 +30,7 @@ public interface ClazzMapper {
 
     @Delete("delete from clazz where id=#{id}")
     public boolean deleteClazz(Integer id);
+
+    @Delete("delete from clazz where gradeId=#{gradeId}")
+    public boolean deleteClazzByGradeId(Integer gradeId);
 }

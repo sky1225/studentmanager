@@ -23,12 +23,12 @@ public interface CourseMapper {
     public List<Course> findAllCourse();
 
     @Select("select * from course where id=#{id}")
-    public List<Course> findCourseById(Integer id);
+    public Course findCourseById(Integer id);
 
     @Insert("insert into course(name) values (#{name})")
     public boolean insertCourse(Course course);
 
     @Delete("delete from course where id=#{id}")
-    public boolean deleteCourse(Integer id);
+    public boolean deleteCourseById(Integer id);
 
 }

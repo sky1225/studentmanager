@@ -30,6 +30,8 @@ public class ExamService {
     private CourseMapper courseMapper;
     @Autowired
     private GradeCourseMapper gradeCourseMapper;
+    @Autowired
+    private EscoreMapper escoreMapper;
 
     public List<Map<String, Object>> listAllExam(){
         List<Exam> examList = examMapper.findAllExam();
@@ -83,7 +85,17 @@ public class ExamService {
         return ResultUtils.error(404, "添加考试失败");
     }
 
-    public boolean deleteExam(Integer id){
-        return examMapper.deleteExamById(id);
+    public Message deleteExam(Integer id){
+        Exam exam = examMapper.findExamById(id);
+        if (exam == null){
+            return ResultUtils.error(404, "要删除的考试不存在");
+        }
+        if (!(escoreMapper.findEscoreByExamId(id) == null || escoreMapper.findEscoreByExamId(id) != null && escoreMapper.findEscoreByExamId(id).size() == 0)){
+            return ResultUtils.error(404, "要删除的考试下存在学生成绩，删除失败");
+        }
+        if (!examMapper.deleteExamById(id)){
+            return ResultUtils.error(404, "删除考试失败");
+        }
+        return ResultUtils.success();
     }
 }

@@ -35,7 +35,8 @@ public class SystemController {
     private GradeService gradeService;
     @Autowired
     private CourseService courseService;
-
+    @Autowired
+    private SystemService systemService;
 
     @GetMapping("/list")
     public Message listAll(HttpServletRequest request, @RequestParam("method") String method){
@@ -155,15 +156,31 @@ public class SystemController {
         }
     }
 
+    @Transactional
     @GetMapping("/delete")
     public Message delete(@RequestParam("method") String method, @RequestParam("id") String id){
         switch (method){
             case "deleteTeacher":
                 return teacherService.deleteTeacher(Integer.parseInt(id));
-
+            case "deleteStudent":
+                return studentService.deleteStudent(Integer.parseInt(id));
+            case "deleteGrade":
+                return gradeService.deleteGrade(Integer.parseInt(id));
+            case "deleteClazz":
+                return clazzService.deleteClazz(Integer.parseInt(id));
+            case "deleteCourse":
+                return courseService.deleteCourse(Integer.parseInt(id));
+            case "deleteExam":
+                return examService.deleteExam(Integer.parseInt(id));
             default:
                 return ResultUtils.error(404, "method格式错误");
+
         }
+    }
+
+    @GetMapping("/manage")
+    public Message systemManager(){
+        return ResultUtils.success();
     }
 
     private Message loginOut(HttpServletRequest request){

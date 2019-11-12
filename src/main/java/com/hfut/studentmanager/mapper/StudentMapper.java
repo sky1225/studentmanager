@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface StudentMapper {
 
+    @Select("select * from Student where id=#{id}")
+    public Student findStudentById(Integer id);
+
     @Select("select * from student while number=#{number}")
     public Student findStudentByNumber(String number);
 
@@ -21,10 +24,10 @@ public interface StudentMapper {
     public List<Student> findAllStudent();
 
     @Select("select * from student where clazzId=#{clazzId}")
-    public List<Student> findStudentByClazzId(String clazzId);
+    public List<Student> findStudentByClazzId(Integer clazzId);
 
     @Select("select * from student where gradeId=#{gradeId}")
-    public List<Student> findStudentByGradeId(String gradeId);
+    public List<Student> findStudentByGradeId(Integer gradeId);
 
     @Insert("insert into student(number, name, sex, phone, qq, clazzId, gradeId) values" +
             "(#{number}, #{name}, #{sex}, #{phone}, #{qq}, #{clazzId}, #{gradeId})")
@@ -33,7 +36,7 @@ public interface StudentMapper {
     @Update("update student set phone=#{phone}, qq=#{qq}")
     public boolean updateStudent(Student student);
 
-    @Delete("delete from student where number=#{number}")
-    public boolean deleteStudent(String number);
+    @Delete("delete from student where id=#{id}")
+    public boolean deleteStudentById(Integer id);
 
 }

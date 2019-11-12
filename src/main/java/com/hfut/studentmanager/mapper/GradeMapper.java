@@ -18,7 +18,7 @@ public interface GradeMapper {
     public List<Grade> findAllGrade();
 
     @Select("select * from grade where id=#{id}")
-    public List<Grade> findGradeById(Integer id);
+    public Grade findGradeById(Integer id);
 
     @Select("select name from grade where id=#{id}")
     public String findNameById(Integer id);

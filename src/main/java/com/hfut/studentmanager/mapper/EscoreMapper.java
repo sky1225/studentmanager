@@ -40,4 +40,7 @@ public interface EscoreMapper {
     @Delete("delete from escore where id=#{id}")
     public boolean deleteEscore(Integer id);
 
+    @Delete("delete from escore where studentId=#{studentId}")
+    public boolean deleteEscoreByStudentId(Integer studentId);
+
 }

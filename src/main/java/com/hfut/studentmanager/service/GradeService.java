@@ -1,19 +1,16 @@
 package com.hfut.studentmanager.service;
 
-import com.hfut.studentmanager.mapper.ClazzMapper;
-import com.hfut.studentmanager.mapper.CourseMapper;
-import com.hfut.studentmanager.mapper.GradeCourseMapper;
-import com.hfut.studentmanager.mapper.GradeMapper;
-import com.hfut.studentmanager.pojo.Clazz;
-import com.hfut.studentmanager.pojo.Course;
-import com.hfut.studentmanager.pojo.Grade;
-import com.hfut.studentmanager.pojo.GradeCourse;
+import com.hfut.studentmanager.mapper.*;
+import com.hfut.studentmanager.pojo.*;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
 import com.hfut.studentmanager.utils.jsonBean.JSONGrade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.lang.System;
 import java.util.*;
 
 @Service
@@ -25,6 +22,12 @@ public class GradeService {
     private GradeCourseMapper gradeCourseMapper;
     @Autowired
     private CourseMapper courseMapper;
+    @Autowired
+    private ClazzMapper clazzMapper;
+    @Autowired
+    private ClazzCourseTeacherMapper clazzCourseTeacherMapper;
+    @Autowired
+    private StudentMapper studentMapper;
 
 
     public List<Map<String, Object>> listAllGrade() {
@@ -80,7 +83,30 @@ public class GradeService {
         return ResultUtils.success("年级添加成功");
     }
 
-    public boolean deleteGrade(Integer id){
-        return gradeMapper.deleteGradeById(id);
+    /**
+     * 根据年级id删除年级，若该年级还存在班级或学生，删除失败
+     * @param id 年级id
+     * @return 删除结果
+     */
+    @Transactional
+    public Message deleteGrade(Integer id){
+        Grade grade = gradeMapper.findGradeById(id);
+        if (grade == null){
+            return ResultUtils.error(404, "年级不存在");
+        }
+        if (!(clazzMapper.findClazzByGradeId(id) == null || clazzMapper.findClazzByGradeId(id) != null && clazzMapper.findClazzByGradeId(id).size() == 0)){
+            return ResultUtils.error(404, "该年级下还存在班级，删除失败");
+        }
+        if (!(studentMapper.findStudentByGradeId(id) == null || studentMapper.findStudentByGradeId(id) != null && studentMapper.findStudentByGradeId(id).size() == 0)){
+            return ResultUtils.error(404, "该年级下还存在学生，删除失败");
+        }
+        if (!(gradeCourseMapper.findGradeCourseByGradeId(id) == null || gradeCourseMapper.findGradeCourseByGradeId(id) != null && gradeCourseMapper.findGradeCourseByGradeId(id).size() == 0)){
+            return ResultUtils.error(404, "该年级下还存在课程，删除失败");
+        }
+        if (!gradeMapper.deleteGradeById(id)){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return ResultUtils.error(404, "删除年级失败");
+        }
+        return ResultUtils.success();
     }
 }
