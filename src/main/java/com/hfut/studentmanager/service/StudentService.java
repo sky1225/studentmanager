@@ -34,7 +34,11 @@ public class StudentService {
         return studentMapper.findAllStudent();
     }
 
+    @Transactional
     public Message addStudent(JSONStudent jsonStudent){
+        if (studentMapper.findStudentByNumber(jsonStudent.getNumber()) != null){
+            return ResultUtils.error(404, "要添加学生的该学号已存在");
+        }
         Message message = new Message();
         Integer gradeId = gradeMapper.findIdByName(jsonStudent.getGrade());
         if (gradeId == null){
@@ -52,11 +56,11 @@ public class StudentService {
         student.setSex(jsonStudent.getSex());
         student.setClazzId(clazzId);
         student.setGradeId(gradeId);
-        System.out.println("student:" + student);
-        if (studentMapper.insertStudent(student)){
-            return ResultUtils.success("学生信息添加成功");
+        if (!studentMapper.insertStudent(student)){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return ResultUtils.error(404, "此学生添加失败");
         }
-        return ResultUtils.error(404, "此学生信息插入数据库失败");
+        return ResultUtils.success("学生信息添加成功");
     }
 
     @Transactional

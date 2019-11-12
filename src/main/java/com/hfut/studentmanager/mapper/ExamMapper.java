@@ -14,22 +14,22 @@ import java.util.List;
 public interface ExamMapper {
 
     @Select("select * from exam where id=#{id}")
-    public Exam findExamById(Integer id);
+    Exam findExamById(Integer id);
 
     @Select("select * from exam")
-    public List<Exam> findAllExam();
+    List<Exam> findAllExam();
 
     @Select("select * from exam where clazzId=#{clazzId}")
-    public List<Exam> findExamByClazzId(String clazzId);
+    List<Exam> findExamByClazzId(String clazzId);
 
     @Select("select * from exam where gradeId=#{gradeId}")
-    public List<Exam> findExamByGradeId(String gradeId);
+    List<Exam> findExamByGradeId(String gradeId);
 
     @Insert("insert into exam(name, time, remark, type, gradeId, clazzId, courseId) values" +
             "(#{name}, #{time}, #{remark}, #{type}, #{gradeId}, #{clazzId}, #{courseId})")
-    public boolean insertExam(Exam exam);
+    boolean insertExam(Exam exam);
 
     @Delete("delete from exam where id=#{id}")
-    public boolean deleteExamById(Integer id);
+    boolean deleteExamById(Integer id);
 
 }

@@ -51,6 +51,7 @@ public class GradeService {
         return result;
     }
 
+    @Transactional
     public Message addGrade(JSONGrade jsonGrade){
         Integer gradeId = gradeMapper.findIdByName(jsonGrade.getName());
         if (gradeId != null){
@@ -60,6 +61,7 @@ public class GradeService {
         Grade grade = new Grade();
         grade.setName(jsonGrade.getName());
         if (!gradeMapper.insertGrade(grade)){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "年级添加失败");
         }
         gradeId = gradeMapper.findIdByName(jsonGrade.getName());
@@ -69,6 +71,7 @@ public class GradeService {
                 Course course = new Course();
                 course.setName(courseName);
                 if (!courseMapper.insertCourse(course)){
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     return ResultUtils.error(404, "插入该年级对应课程'" + courseName + "'失败");
                 }
                 courseId = courseMapper.findIdByName(courseName);
@@ -77,6 +80,7 @@ public class GradeService {
             gradeCourse.setCourseId(courseId);
             gradeCourse.setGradeId(gradeId);
             if (!gradeCourseMapper.insertGradeCourse(gradeCourse)){
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return ResultUtils.error(404, "年级添加失败");
             }
         }

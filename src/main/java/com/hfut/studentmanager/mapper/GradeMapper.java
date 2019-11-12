@@ -15,20 +15,20 @@ import java.util.List;
 public interface GradeMapper {
 
     @Select("select * from grade")
-    public List<Grade> findAllGrade();
+    List<Grade> findAllGrade();
 
     @Select("select * from grade where id=#{id}")
-    public Grade findGradeById(Integer id);
+    Grade findGradeById(Integer id);
 
     @Select("select name from grade where id=#{id}")
-    public String findNameById(Integer id);
+    String findNameById(Integer id);
 
     @Select("select id from grade where name=#{name}")
-    public Integer findIdByName(String name);
+    Integer findIdByName(String name);
 
     @Insert("insert into grade(name) values (#{name})")
-    public boolean insertGrade(Grade grade);
+    boolean insertGrade(Grade grade);
 
     @Delete("delete from grade where id=#{id}")
-    public boolean deleteGradeById(Integer id);
+    boolean deleteGradeById(Integer id);
 }

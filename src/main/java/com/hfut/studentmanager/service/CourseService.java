@@ -25,11 +25,17 @@ public class CourseService {
         return courseMapper.findAllCourse();
     }
 
+    @Transactional
     public Message addCourse(Course course){
-        if (courseMapper.insertCourse(course)){
-            return ResultUtils.success("添加课程成功");
+        Course course1 = courseMapper.findCourseByName(course.getName());
+        if (course1 != null){
+            return ResultUtils.error(404, "课程已存在");
         }
-        return ResultUtils.error(404, "课程添加失败");
+        if (!courseMapper.insertCourse(course)){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return ResultUtils.error(404, "课程添加失败");
+        }
+        return ResultUtils.success("添加课程成功");
     }
 
     @Transactional

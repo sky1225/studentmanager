@@ -8,6 +8,8 @@ import com.hfut.studentmanager.utils.ResultUtils;
 import com.hfut.studentmanager.utils.jsonBean.JSONExam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -51,13 +53,13 @@ public class ExamService {
         return result;
     }
 
+    @Transactional
     public Message addExam(JSONExam jsonExam){
         Exam exam = new Exam();
         exam.setName(jsonExam.getName());
         try {
-            Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            date = dateFormat.parse(jsonExam.getTime());
+            Date date = dateFormat.parse(jsonExam.getTime());
             exam.setTime(date);
         }catch (Exception e){
             e.printStackTrace();
@@ -79,12 +81,14 @@ public class ExamService {
         exam.setGradeId(gradeId);
         exam.setCourseId(courseId);
         exam.setCourseId(courseId);
-        if (examMapper.insertExam(exam)){
-            return ResultUtils.success();
+        if (!examMapper.insertExam(exam)){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return ResultUtils.error(404, "添加考试失败");
         }
-        return ResultUtils.error(404, "添加考试失败");
+        return ResultUtils.success();
     }
 
+    @Transactional
     public Message deleteExam(Integer id){
         Exam exam = examMapper.findExamById(id);
         if (exam == null){
@@ -94,6 +98,7 @@ public class ExamService {
             return ResultUtils.error(404, "要删除的考试下存在学生成绩，删除失败");
         }
         if (!examMapper.deleteExamById(id)){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "删除考试失败");
         }
         return ResultUtils.success();

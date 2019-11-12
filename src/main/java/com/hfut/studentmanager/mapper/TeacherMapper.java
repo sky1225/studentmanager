@@ -11,19 +11,19 @@ import java.util.List;
 public interface TeacherMapper {
 
     @Select("select * from teacher")
-    public List<Teacher> findAllTeacher();
+    List<Teacher> findAllTeacher();
 
     @Select("select * from teacher where id=#{id}")
-    public Teacher findTeacherById(Integer id);
+    Teacher findTeacherById(Integer id);
 
     @Select("select id from teacher where number=#{number}")
-    public Integer findIdByNumber(@Param("number") String number);
+    Integer findIdByNumber(@Param("number") String number);
 
     @Insert("insert into teacher(number, name, sex, phone, qq) values" +
             "(#{number}, #{name}, #{sex}, #{phone}, #{qq})")
-    public boolean insertTeacher(Teacher teacher);
+    boolean insertTeacher(Teacher teacher);
 
     @Delete("delete from teacher where id=#{id}")
-    public boolean deleteTeacher(Integer id);
+    boolean deleteTeacher(Integer id);
 }
 

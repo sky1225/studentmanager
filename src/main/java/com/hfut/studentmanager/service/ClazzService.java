@@ -52,6 +52,9 @@ public class ClazzService {
             return ResultUtils.error(404, "不存在年级：" + jsonClazz.getGrade());
         }
         clazz.setGradeId(gradeId);
+        if (clazzMapper.findIdByNameAndGradeId(jsonClazz.getName(), gradeId) != null){
+            return ResultUtils.error(404, "班级已存在");
+        }
         if (!clazzMapper.insertClazz(clazz)){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "插入班级失败");

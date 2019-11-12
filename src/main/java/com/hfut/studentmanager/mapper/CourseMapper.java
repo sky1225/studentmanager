@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,22 +14,25 @@ import java.util.List;
 @Repository
 public interface CourseMapper {
 
+    @Select("select * from course where name=#{name}")
+    Course findCourseByName(String name);
+
     @Select("select name from course where id=#{id}")
-    public String findNameById(Integer id);
+    String findNameById(Integer id);
 
     @Select("select id from course where name=#{name}")
-    public Integer findIdByName(String name);
+    Integer findIdByName(String name);
 
     @Select("select * from course")
-    public List<Course> findAllCourse();
+    List<Course> findAllCourse();
 
     @Select("select * from course where id=#{id}")
-    public Course findCourseById(Integer id);
+    Course findCourseById(Integer id);
 
     @Insert("insert into course(name) values (#{name})")
-    public boolean insertCourse(Course course);
+    boolean insertCourse(Course course);
 
     @Delete("delete from course where id=#{id}")
-    public boolean deleteCourseById(Integer id);
+    boolean deleteCourseById(Integer id);
 
 }

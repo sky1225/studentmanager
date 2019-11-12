@@ -11,26 +11,26 @@ import java.util.List;
 public interface ClazzMapper {
 
     @Select("select * from clazz where id=#{id}")
-    public Clazz findClazzById(Integer id);
+    Clazz findClazzById(Integer id);
 
     @Select("select * from clazz")
-    public List<Clazz> findAllClazz();
+    List<Clazz> findAllClazz();
 
     @Select("select * from clazz where gradeId=#{gradeId}")
-    public List<Clazz> findClazzByGradeId(Integer gradeId);
+    List<Clazz> findClazzByGradeId(Integer gradeId);
 
     @Select("select name from clazz where id=#{id}")
-    public String findNameById(Integer id);
+    String findNameById(Integer id);
 
     @Select("select id from clazz where name=#{name} and gradeId=#{gradeId}")
-    public Integer findIdByNameAndGradeId(@Param("name") String name, @Param("gradeId")Integer gradeId);
+    Integer findIdByNameAndGradeId(@Param("name") String name, @Param("gradeId")Integer gradeId);
 
     @Insert("insert into clazz(name, gradeId) values (#{name}, #{gradeId})")
-    public boolean insertClazz(Clazz clazz);
+    boolean insertClazz(Clazz clazz);
 
     @Delete("delete from clazz where id=#{id}")
-    public boolean deleteClazz(Integer id);
+    boolean deleteClazz(Integer id);
 
     @Delete("delete from clazz where gradeId=#{gradeId}")
-    public boolean deleteClazzByGradeId(Integer gradeId);
+    boolean deleteClazzByGradeId(Integer gradeId);
 }

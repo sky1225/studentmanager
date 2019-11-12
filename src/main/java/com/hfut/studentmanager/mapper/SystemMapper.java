@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 public interface SystemMapper {
 
     @Select("select * from system")
-    public System findSystem();
+    System findSystem();
 
     @Update("update system set schoolName=#{schoolName}, " +
             "forbidTeacher=#{forbidTeacher}, " +
             "forbidStudent=#{forbidStudent}," +
             "noticeTeacher=#{noticeTeacher}," +
             "noticeStudent=#{noticeStudent}")
-    public boolean updateSystem(System system);
+    boolean updateSystem(System system);
 
 }
