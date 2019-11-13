@@ -40,9 +40,9 @@ public class GradeService {
             map.put("name", grade.getName());
             List<GradeCourse> gradeCourseList = gradeCourseMapper.findGradeCourseByGradeId(grade.getId());
             if (!(gradeCourseList == null || gradeCourseList != null && gradeCourseList.size() == 0)){
-                StringBuffer courseNames = new StringBuffer("| ");
+                StringBuffer courseNames = new StringBuffer("/ ");
                 for (GradeCourse gradeCourse: gradeCourseList){
-                    courseNames.append(courseMapper.findNameById(gradeCourse.getCourseId()) + " | ");
+                    courseNames.append(courseMapper.findNameById(gradeCourse.getCourseId()) + " / ");
                 }
                 map.put("courseNames", courseNames.toString());
             }else {

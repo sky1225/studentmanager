@@ -73,6 +73,9 @@ public class SystemController {
             case "listClazzByGradeId":
                 List<Clazz> clazzListByGrade = clazzService.listClazzByGradeId(Integer.parseInt(gradeId));
                 return ResultUtils.success(clazzListByGrade);
+            case "listCourseByGradeId":
+                List<Map<String, Object>> gradeCourseList = gradeCourseService.listGradeCourseByGradeId(Integer.parseInt(gradeId));
+                return ResultUtils.success(gradeCourseList);
             default:
                 return ResultUtils.error(404, "请求参数method错误");
         }

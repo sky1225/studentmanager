@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class GradeCourseService {
 
@@ -20,6 +25,18 @@ public class GradeCourseService {
     private CourseMapper courseMapper;
     @Autowired
     private GradeMapper gradeMapper;
+
+    public List<Map<String, Object>> listGradeCourseByGradeId(Integer gradeId){
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (GradeCourse gradeCourse: gradeCourseMapper.findGradeCourseByGradeId(gradeId)){
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", gradeCourse.getId());
+            map.put("gradeId", gradeCourse.getGradeId());
+            map.put("course", courseMapper.findNameById(gradeCourse.getCourseId()));
+            result.add(map);
+        }
+        return result;
+    }
 
     @Transactional
     public Message addGradeCourse(GradeCourse gradeCourse){
