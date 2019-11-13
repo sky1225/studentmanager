@@ -13,6 +13,9 @@ import java.util.List;
 @Repository
 public interface ExamMapper {
 
+    @Select("select * from exam where courseId=#{courseId}")
+    List<Exam> findExamByCourseId(Integer courseId);
+
     @Select("select * from exam where id=#{id}")
     Exam findExamById(Integer id);
 

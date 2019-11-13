@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.List;
+
 @Service
 public class ClazzCourseTeacherService {
 
@@ -22,6 +24,10 @@ public class ClazzCourseTeacherService {
     ClazzMapper clazzMapper;
     @Autowired
     GradeMapper gradeMapper;
+
+    public List<ClazzCourseTeacher> listClazzCourseTeacherByTeacherId(Integer teacherId){
+        return clazzCourseTeacherMapper.findClazzCourseTeacherByTeacherId(teacherId);
+    }
 
     @Transactional
     public Message addClazzCourseTeacher(ClazzCourseTeacher clazzCourseTeacher){

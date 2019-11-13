@@ -4,8 +4,6 @@ import com.hfut.studentmanager.mapper.*;
 import com.hfut.studentmanager.pojo.Student;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
-import com.hfut.studentmanager.utils.jsonBean.JSONStudent;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +25,10 @@ public class StudentService {
     private UserMapper userMapper;
     @Autowired
     private EscoreMapper escoreMapper;
+
+    public List<Student> listStudentByClazz(Integer clazzId){
+        return studentMapper.findStudentByClazzId(clazzId);
+    }
 
     public List<Student> listAllStudent(){
         return studentMapper.findAllStudent();

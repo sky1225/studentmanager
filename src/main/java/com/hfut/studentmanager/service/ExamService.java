@@ -35,6 +35,14 @@ public class ExamService {
     @Autowired
     private EscoreMapper escoreMapper;
 
+    public Exam listExamById(Integer id){
+        return examMapper.findExamById(id);
+    }
+
+    public List<Exam> listExamByCourseId(Integer courseId){
+        return examMapper.findExamByCourseId(courseId);
+    }
+
     public List<Map<String, Object>> listAllExam(){
         List<Exam> examList = examMapper.findAllExam();
         List<Map<String, Object>> result = new ArrayList<>();

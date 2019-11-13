@@ -30,6 +30,11 @@ public class ClazzService {
     private ClazzCourseTeacherMapper clazzCourseTeacherMapper;
     @Autowired
     private StudentMapper studentMapper;
+
+    public Clazz listClazzById(Integer id){
+        return clazzMapper.findClazzById(id);
+    }
+
     public List<Map<String, Object>> listAllClazz(){
         List<Clazz> clazzList = clazzMapper.findAllClazz();
         List<Map<String, Object>> result = new ArrayList<>();
