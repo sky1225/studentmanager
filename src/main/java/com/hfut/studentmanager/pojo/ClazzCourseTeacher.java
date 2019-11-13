@@ -9,6 +9,17 @@ public class ClazzCourseTeacher {
   private Integer courseId;
   private Integer teacherId;
 
+  public ClazzCourseTeacher() {
+  }
+
+  public ClazzCourseTeacher(Integer id, Integer clazzId, Integer gradeId, Integer courseId, Integer teacherId) {
+    this.id = id;
+    this.clazzId = clazzId;
+    this.gradeId = gradeId;
+    this.courseId = courseId;
+    this.teacherId = teacherId;
+  }
+
   public Integer getId() {
     return id;
   }

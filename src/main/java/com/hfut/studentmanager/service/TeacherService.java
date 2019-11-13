@@ -70,48 +70,13 @@ public class TeacherService {
 
 
     @Transactional
-    public Message addTeacher(JSONTeacher jsonTeacher){
-        if (teacherMapper.findIdByNumber(jsonTeacher.getNumber()) != null){
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+    public Message addTeacher(Teacher teacher){
+        if (teacherMapper.findIdByNumber(teacher.getNumber()) != null){
             return ResultUtils.error(404, "该教师工号已存在");
         }
-        Teacher teacher = new Teacher();
-        teacher.setName(jsonTeacher.getName());
-        teacher.setNumber(jsonTeacher.getNumber());
-        teacher.setPhone(jsonTeacher.getPhone());
-        teacher.setSex(jsonTeacher.getSex());
-        teacher.setQq(jsonTeacher.getQq());
         if (!teacherMapper.insertTeacher(teacher)){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "插入教师失败");
-        }
-        List<JSONCourse> courseList = jsonTeacher.getCourses();
-        for (JSONCourse course: courseList){
-            Integer gradeId = gradeMapper.findIdByName(course.getGrade());
-            if (gradeId == null){
-                return ResultUtils.error(404, "‘" + course.getGrade() + "’不存在");
-            }
-            Integer courseId = courseMapper.findIdByName(course.getCourse());
-            if (courseId == null){
-                return ResultUtils.error(404, "不存在课程‘" + course.getCourse() + "’");
-            }
-            if (gradeCourseMapper.findGradeCourseByGradeIdAndCourseId(gradeId, courseId) == null){
-                return ResultUtils.error(404, course.getGrade() + "不存在课程‘" + course.getCourse() + "’");
-            }
-            Integer clazzId = clazzMapper.findIdByNameAndGradeId(course.getClazz(), gradeId);
-            if (clazzId == null){
-                return ResultUtils.error(404, "‘" + course.getGrade() + course.getClazz() + "’不存在");
-            }
-            Integer teacherId = teacherMapper.findIdByNumber(teacher.getNumber());
-            ClazzCourseTeacher clazzCourseTeacher = new ClazzCourseTeacher();
-            clazzCourseTeacher.setClazzId(clazzId);
-            clazzCourseTeacher.setGradeId(gradeId);
-            clazzCourseTeacher.setTeacherId(teacherId);
-            clazzCourseTeacher.setCourseId(courseId);
-            if (!clazzCourseTeacherMapper.insertClazzCourseTeacher(clazzCourseTeacher)){
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                return ResultUtils.error(404, "插入该教师对应课程‘" + course.getCourse() + "’失败");
-            }
         }
         return ResultUtils.success("插入教师成功");
     }

@@ -43,17 +43,14 @@ public class ClazzService {
         return result;
     }
 
+    public List<Clazz> listClazzByGradeId(Integer gradeId){
+        return clazzMapper.findClazzByGradeId(gradeId);
+    }
+
     @Transactional
-    public Message addClazz(JSONClazz jsonClazz){
-        Clazz clazz = new Clazz();
-        clazz.setName(jsonClazz.getName());
-        Integer gradeId = gradeMapper.findIdByName(jsonClazz.getGrade());
-        if (gradeId == null){
-            return ResultUtils.error(404, "不存在年级：" + jsonClazz.getGrade());
-        }
-        clazz.setGradeId(gradeId);
-        if (clazzMapper.findIdByNameAndGradeId(jsonClazz.getName(), gradeId) != null){
-            return ResultUtils.error(404, "班级已存在");
+    public Message addClazz(Clazz clazz){
+        if (clazzMapper.findIdByNameAndGradeId(clazz.getName(), clazz.getGradeId()) != null){
+            return ResultUtils.error(404, "要添加的班级已存在");
         }
         if (!clazzMapper.insertClazz(clazz)){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

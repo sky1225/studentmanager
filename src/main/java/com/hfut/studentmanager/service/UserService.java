@@ -25,6 +25,9 @@ public class UserService {
 
     @Transactional
     public Message addUser(User user){
+        if (userMapper.findUserByAccount(user.getAccount()) != null){
+            return ResultUtils.error(404, "用户已存在");
+        }
         if (!userMapper.insertUser(user)){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "用户注册失败");

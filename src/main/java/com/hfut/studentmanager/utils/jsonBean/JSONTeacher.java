@@ -12,7 +12,18 @@ public class JSONTeacher {
     private String sex;
     private String phone;
     private String qq;
-    private List<JSONCourse> courses;
+
+    public JSONTeacher() {
+    }
+
+    public JSONTeacher(Integer id, String number, String name, String sex, String phone, String qq) {
+        this.id = id;
+        this.number = number;
+        this.name = name;
+        this.sex = sex;
+        this.phone = phone;
+        this.qq = qq;
+    }
 
     public Integer getId() {
         return id;
@@ -62,11 +73,4 @@ public class JSONTeacher {
         this.qq = qq;
     }
 
-    public List<JSONCourse> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<JSONCourse> courses) {
-        this.courses = courses;
-    }
 }

@@ -7,6 +7,15 @@ public class GradeCourse {
   private Integer gradeId;
   private Integer courseId;
 
+  public GradeCourse() {
+  }
+
+  public GradeCourse(Integer id, Integer gradeId, Integer courseId) {
+    this.id = id;
+    this.gradeId = gradeId;
+    this.courseId = courseId;
+  }
+
   public Integer getId() {
     return id;
   }

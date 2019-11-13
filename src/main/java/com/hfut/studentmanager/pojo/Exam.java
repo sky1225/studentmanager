@@ -14,6 +14,20 @@ public class Exam {
   private Integer clazzId;
   private Integer courseId;
 
+  public Exam() {
+  }
+
+  public Exam(Integer id, String name, Date time, String remark, Integer type, Integer gradeId, Integer clazzId, Integer courseId) {
+    this.id = id;
+    this.name = name;
+    this.time = time;
+    this.remark = remark;
+    this.type = type;
+    this.gradeId = gradeId;
+    this.clazzId = clazzId;
+    this.courseId = courseId;
+  }
+
   public Integer getId() {
     return id;
   }

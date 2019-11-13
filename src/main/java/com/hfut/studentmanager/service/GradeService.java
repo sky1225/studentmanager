@@ -38,12 +38,16 @@ public class GradeService {
             Map<String, Object> map = new HashMap<>();
             map.put("id", grade.getId());
             map.put("name", grade.getName());
-            StringBuffer courseNames = new StringBuffer("| ");
             List<GradeCourse> gradeCourseList = gradeCourseMapper.findGradeCourseByGradeId(grade.getId());
-            for (GradeCourse gradeCourse: gradeCourseList){
-                courseNames.append(courseMapper.findNameById(gradeCourse.getCourseId()) + " | ");
+            if (!(gradeCourseList == null || gradeCourseList != null && gradeCourseList.size() == 0)){
+                StringBuffer courseNames = new StringBuffer("| ");
+                for (GradeCourse gradeCourse: gradeCourseList){
+                    courseNames.append(courseMapper.findNameById(gradeCourse.getCourseId()) + " | ");
+                }
+                map.put("courseNames", courseNames.toString());
+            }else {
+                map.put("courseNames", "");
             }
-            map.put("courseNames", courseNames.toString());
             System.out.println(map);
             result.add(map);
         }
@@ -52,39 +56,15 @@ public class GradeService {
     }
 
     @Transactional
-    public Message addGrade(JSONGrade jsonGrade){
-        Integer gradeId = gradeMapper.findIdByName(jsonGrade.getName());
-        if (gradeId != null){
+    public Message addGrade(Grade grade){
+        if (gradeMapper.findIdByName(grade.getName()) != null){
             return ResultUtils.error(404, "该年级已存在");
         }
-        String[] courses = jsonGrade.getCourses();
-        Grade grade = new Grade();
-        grade.setName(jsonGrade.getName());
         if (!gradeMapper.insertGrade(grade)){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "年级添加失败");
         }
-        gradeId = gradeMapper.findIdByName(jsonGrade.getName());
-        for (String courseName: courses){
-            Integer courseId;
-            if ((courseId = courseMapper.findIdByName(courseName)) == null){
-                Course course = new Course();
-                course.setName(courseName);
-                if (!courseMapper.insertCourse(course)){
-                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                    return ResultUtils.error(404, "插入该年级对应课程'" + courseName + "'失败");
-                }
-                courseId = courseMapper.findIdByName(courseName);
-            }
-            GradeCourse gradeCourse = new GradeCourse();
-            gradeCourse.setCourseId(courseId);
-            gradeCourse.setGradeId(gradeId);
-            if (!gradeCourseMapper.insertGradeCourse(gradeCourse)){
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                return ResultUtils.error(404, "年级添加失败");
-            }
-        }
-        return ResultUtils.success("年级添加成功");
+        return ResultUtils.success();
     }
 
     /**

@@ -27,8 +27,7 @@ public class CourseService {
 
     @Transactional
     public Message addCourse(Course course){
-        Course course1 = courseMapper.findCourseByName(course.getName());
-        if (course1 != null){
+        if (courseMapper.findCourseByName(course.getName()) != null){
             return ResultUtils.error(404, "课程已存在");
         }
         if (!courseMapper.insertCourse(course)){

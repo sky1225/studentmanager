@@ -10,6 +10,18 @@ public class Teacher {
   private String phone;
   private String qq;
 
+  public Teacher() {
+  }
+
+  public Teacher(Integer id, String number, String name, String sex, String phone, String qq) {
+    this.id = id;
+    this.number = number;
+    this.name = name;
+    this.sex = sex;
+    this.phone = phone;
+    this.qq = qq;
+  }
+
   public Integer getId() {
     return id;
   }

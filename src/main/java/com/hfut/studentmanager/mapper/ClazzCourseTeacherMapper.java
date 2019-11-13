@@ -1,10 +1,7 @@
 package com.hfut.studentmanager.mapper;
 
 import com.hfut.studentmanager.pojo.ClazzCourseTeacher;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,11 +10,17 @@ import java.util.List;
 @Repository
 public interface ClazzCourseTeacherMapper {
 
+    @Select("select * from clazz_course_teacher where clazzId=#{clazzCourseTeacher.clazzId} " +
+            "and gradeId=#{clazzCourseTeacher.gradeId} " +
+            "and courseId=#{clazzCourseTeacher.courseId} " +
+            "and teacherId=#{clazzCourseTeacher.teacherId}")
+    ClazzCourseTeacher findClazzCourseTeacherByClazzIdGradeIdCourseIdTeacherId(@Param("clazzCourseTeacher") ClazzCourseTeacher clazzCourseTeacher);
+
     @Select("select * from clazz_course_teacher")
     List<ClazzCourseTeacher> findAllClazzCourseTeacher();
 
     @Select("select * from clazz_course_teacher where id=#{id}")
-    List<ClazzCourseTeacher> findClazzCourseTeacherById(Integer id);
+    ClazzCourseTeacher findClazzCourseTeacherById(Integer id);
 
     @Select("select * from clazz_course_teacher where clazzId=#{clazzId}")
     List<ClazzCourseTeacher> findClazzCourseTeacherByClazzId(Integer clazzId);

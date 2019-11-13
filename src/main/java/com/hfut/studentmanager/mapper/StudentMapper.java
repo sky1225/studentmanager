@@ -14,10 +14,10 @@ public interface StudentMapper {
     @Select("select * from Student where id=#{id}")
     Student findStudentById(Integer id);
 
-    @Select("select * from student while number=#{number}")
+    @Select("select * from student where number=#{number}")
     Student findStudentByNumber(String number);
 
-    @Select("select * from student while name=#{name}")
+    @Select("select * from student where name=#{name}")
     List<Student> findStudentByName(String name);
 
     @Select("select * from student")

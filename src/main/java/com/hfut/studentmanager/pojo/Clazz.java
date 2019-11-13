@@ -7,6 +7,15 @@ public class Clazz {
   private String name;
   private Integer gradeId;
 
+  public Clazz() {
+  }
+
+  public Clazz(Integer id, String name, Integer gradeId) {
+    this.id = id;
+    this.name = name;
+    this.gradeId = gradeId;
+  }
+
   public Integer getId() {
     return id;
   }

@@ -54,33 +54,7 @@ public class ExamService {
     }
 
     @Transactional
-    public Message addExam(JSONExam jsonExam){
-        Exam exam = new Exam();
-        exam.setName(jsonExam.getName());
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = dateFormat.parse(jsonExam.getTime());
-            exam.setTime(date);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResultUtils.error(404, "日期格式不规范");
-        }
-        exam.setRemark(jsonExam.getRemark());
-        exam.setType(jsonExam.getType());
-        Integer gradeId = gradeMapper.findIdByName(jsonExam.getGrade());
-
-        Integer courseId = courseMapper.findIdByName(jsonExam.getCourse());
-        if (gradeCourseMapper.findGradeCourseByGradeIdAndCourseId(gradeId, courseId) == null){
-            return ResultUtils.error(404, jsonExam.getGrade() + "无课程‘" + jsonExam.getCourse() + "'");
-        }
-        Integer clazzId;
-        if (jsonExam.getType() == 2){
-            clazzId = clazzMapper.findIdByNameAndGradeId(jsonExam.getClazz(), gradeId);
-            exam.setClazzId(clazzId);
-        }
-        exam.setGradeId(gradeId);
-        exam.setCourseId(courseId);
-        exam.setCourseId(courseId);
+    public Message addExam(Exam exam){
         if (!examMapper.insertExam(exam)){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "添加考试失败");

@@ -15,6 +15,20 @@ public class Student {
   private Integer clazzId;
   private Integer gradeId;
 
+  public Student() {
+  }
+
+  public Student(Integer id, String number, String name, String sex, String phone, String qq, Integer clazzId, Integer gradeId) {
+    this.id = id;
+    this.number = number;
+    this.name = name;
+    this.sex = sex;
+    this.phone = phone;
+    this.qq = qq;
+    this.clazzId = clazzId;
+    this.gradeId = gradeId;
+  }
+
   @Override
   public String toString() {
     return "Student{" +

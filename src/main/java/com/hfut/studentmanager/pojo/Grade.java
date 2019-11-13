@@ -6,6 +6,14 @@ public class Grade {
   private Integer id;
   private String name;
 
+  public Grade() {
+  }
+
+  public Grade(Integer id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
   @Override
   public String toString() {
     return "Grade{" +

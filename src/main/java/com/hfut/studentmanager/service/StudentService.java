@@ -20,8 +20,6 @@ public class StudentService {
     @Autowired
     private StudentMapper studentMapper;
     @Autowired
-    private Student student;
-    @Autowired
     private ClazzMapper clazzMapper;
     @Autowired
     private GradeMapper gradeMapper;
@@ -35,27 +33,10 @@ public class StudentService {
     }
 
     @Transactional
-    public Message addStudent(JSONStudent jsonStudent){
-        if (studentMapper.findStudentByNumber(jsonStudent.getNumber()) != null){
+    public Message addStudent(Student student){
+        if (studentMapper.findStudentByNumber(student.getNumber()) != null){
             return ResultUtils.error(404, "要添加学生的该学号已存在");
         }
-        Message message = new Message();
-        Integer gradeId = gradeMapper.findIdByName(jsonStudent.getGrade());
-        if (gradeId == null){
-            return ResultUtils.error(404, "无此学生所在年级，添加学生信息失败");
-        }
-        System.out.println(jsonStudent.getClazz() + gradeId);
-        Integer clazzId = clazzMapper.findIdByNameAndGradeId(jsonStudent.getClazz(), gradeId);
-        if (clazzId == null){
-            return ResultUtils.error(404, "无此学生所在年级下的班级，添加学生信息失败");
-        }
-        student.setNumber(jsonStudent.getNumber());
-        student.setName(jsonStudent.getName());
-        student.setQq(jsonStudent.getQq());
-        student.setPhone(jsonStudent.getPhone());
-        student.setSex(jsonStudent.getSex());
-        student.setClazzId(clazzId);
-        student.setGradeId(gradeId);
         if (!studentMapper.insertStudent(student)){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "此学生添加失败");
