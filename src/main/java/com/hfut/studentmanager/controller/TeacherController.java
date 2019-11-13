@@ -1,6 +1,5 @@
 package com.hfut.studentmanager.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.hfut.studentmanager.mapper.ClazzCourseTeacherMapper;
 import com.hfut.studentmanager.mapper.ClazzMapper;
 import com.hfut.studentmanager.mapper.CourseMapper;
@@ -30,17 +29,15 @@ public class TeacherController {
     @Autowired
     private ExamService examService;
     @Autowired
-    private GradeMapper gradeMapper;
-    @Autowired
-    private ClazzMapper clazzMapper;
-    @Autowired
-    private CourseMapper courseMapper;
-    @Autowired
     private ClazzService clazzService;
     @Autowired
     private StudentService studentService;
     @Autowired
     private EScoreService eScoreService;
+    @Autowired
+    private GradeService gradeService;
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping("/listExam")
     public Message listExam(@RequestParam("teacherId") String teacherId){
@@ -58,9 +55,9 @@ public class TeacherController {
                     map.put("time", exam.getTime());
                     map.put("remark", exam.getRemark());
                     map.put("type", exam.getType());
-                    map.put("grade", gradeMapper.findNameById(exam.getGradeId()));
-                    map.put("clazz", clazzMapper.findNameById(exam.getClazzId()));
-                    map.put("course", courseMapper.findNameById(exam.getCourseId()));
+                    map.put("grade", gradeService.listGradeById(exam.getGradeId()).getName());
+                    map.put("clazz", clazzService.listClazzById(exam.getClazzId()).getName());
+                    map.put("course", courseService.listCourseById(exam.getCourseId()).getName());
                     result.add(map);
                 }
             }
@@ -92,8 +89,8 @@ public class TeacherController {
 
     @PostMapping("/addScore")
     public Message addScore(@RequestBody String studentScore){
-        System.out.println(studentScore);
-        System.out.println(JSON.toJSONString(studentScore));
+//        System.out.println(studentScore);
+//        System.out.println(JSON.toJSONString(studentScore));
         return null;
     }
 

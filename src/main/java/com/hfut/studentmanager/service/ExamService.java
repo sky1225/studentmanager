@@ -39,6 +39,10 @@ public class ExamService {
         return examMapper.findExamById(id);
     }
 
+    public List<Exam> listExamByGradeId(Integer gradeId){
+        return examMapper.findExamByGradeId(gradeId);
+    }
+
     public List<Exam> listExamByCourseId(Integer courseId){
         return examMapper.findExamByCourseId(courseId);
     }

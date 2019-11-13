@@ -29,6 +29,9 @@ public class GradeService {
     @Autowired
     private StudentMapper studentMapper;
 
+    public Grade listGradeById(Integer id){
+        return gradeMapper.findGradeById(id);
+    }
 
     public List<Map<String, Object>> listAllGrade() {
         List<Grade> gradeList = gradeMapper.findAllGrade();

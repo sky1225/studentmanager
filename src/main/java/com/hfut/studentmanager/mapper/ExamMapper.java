@@ -26,7 +26,7 @@ public interface ExamMapper {
     List<Exam> findExamByClazzId(String clazzId);
 
     @Select("select * from exam where gradeId=#{gradeId}")
-    List<Exam> findExamByGradeId(String gradeId);
+    List<Exam> findExamByGradeId(Integer gradeId);
 
     @Insert("insert into exam(name, time, remark, type, gradeId, clazzId, courseId) values" +
             "(#{name}, #{time}, #{remark}, #{type}, #{gradeId}, #{clazzId}, #{courseId})")

@@ -25,6 +25,10 @@ public class CourseService {
         return courseMapper.findAllCourse();
     }
 
+    public Course listCourseById(Integer id){
+        return courseMapper.findCourseById(id);
+    }
+
     @Transactional
     public Message addCourse(Course course){
         if (courseMapper.findCourseByName(course.getName()) != null){

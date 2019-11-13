@@ -26,6 +26,14 @@ public class StudentService {
     @Autowired
     private EscoreMapper escoreMapper;
 
+    public Student listStudentById(Integer id){
+        return studentMapper.findStudentById(id);
+    }
+
+    public Student listStudentByNumber(String number){
+        return studentMapper.findStudentByNumber(number);
+    }
+
     public List<Student> listStudentByClazz(Integer clazzId){
         return studentMapper.findStudentByClazzId(clazzId);
     }
