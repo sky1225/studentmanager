@@ -98,8 +98,8 @@ public class TeacherController {
     }
 
     @GetMapping("/listStudentByClazz")
-    public Message addScore(@RequestParam("examId") String examId,
-                            @RequestParam("clazzId") String clazzId){
+    public Message listStudentByClazz(@RequestParam("examId") String examId,
+                                      @RequestParam("clazzId") String clazzId){
         List<Student> studentList = studentService.listStudentByClazz(Integer.parseInt(clazzId));
         if (studentList == null || studentList.size() == 0) {
             return ResultUtils.error(404, "不存在学生");
@@ -116,8 +116,7 @@ public class TeacherController {
             map.put("studentId", student.getId());
             map.put("number", student.getNumber());
             map.put("name", student.getName());
-            map.put("examId", escore.getExamId());
-            map.put("courseId", escore.getCourseId());
+            map.put("examId", Integer.parseInt(examId));
             result.add(map);
         }
         return ResultUtils.success(result);
