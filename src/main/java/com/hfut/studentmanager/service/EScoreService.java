@@ -40,7 +40,11 @@ public class EScoreService {
     }
 
     public Escore listEScoreByExamIdAndStudentId(Integer examId, Integer studentId){
-        return escoreMapper.findEscoreByExamIdAndStudentId(examId, studentId).get(0);
+        List<Escore> escoreList = escoreMapper.findEscoreByExamIdAndStudentId(examId, studentId);
+        if (escoreList == null || escoreList != null && escoreList.size() == 0){
+            return null;
+        }
+        return escoreList.get(0);
     }
 
     public List<Map<String, Object>> listESCoreByExamIdAndClazzId(Integer examId, Integer clazzId){
