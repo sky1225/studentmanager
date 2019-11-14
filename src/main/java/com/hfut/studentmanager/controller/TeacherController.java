@@ -101,6 +101,9 @@ public class TeacherController {
     public Message addScore(@RequestParam("examId") String examId,
                             @RequestParam("clazzId") String clazzId){
         List<Student> studentList = studentService.listStudentByClazz(Integer.parseInt(clazzId));
+        if (studentList == null || studentList.size() == 0) {
+            return ResultUtils.error(404, "不存在学生");
+        }
         List<Map<String, Object>> result = new ArrayList<>();
         for (Student student: studentList){
             Map<String, Object> map = new HashMap<>();
