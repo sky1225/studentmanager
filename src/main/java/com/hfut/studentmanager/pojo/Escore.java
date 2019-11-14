@@ -11,6 +11,19 @@ public class Escore {
   private Integer courseId;
   private Integer score;
 
+  public Escore() {
+  }
+
+  public Escore(Integer id, Integer examId, Integer clazzId, Integer studentId, Integer gradeId, Integer courseId, Integer score) {
+    this.id = id;
+    this.examId = examId;
+    this.clazzId = clazzId;
+    this.studentId = studentId;
+    this.gradeId = gradeId;
+    this.courseId = courseId;
+    this.score = score;
+  }
+
   public Integer getId() {
     return id;
   }

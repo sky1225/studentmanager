@@ -3,8 +3,13 @@ package com.hfut.studentmanager.service;
 import com.hfut.studentmanager.mapper.EscoreMapper;
 import com.hfut.studentmanager.mapper.StudentMapper;
 import com.hfut.studentmanager.pojo.Escore;
+import com.hfut.studentmanager.pojo.Student;
+import com.hfut.studentmanager.utils.Message;
+import com.hfut.studentmanager.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +25,19 @@ public class EScoreService {
     private StudentMapper studentMapper;
 
 
+    @Transactional
+    public Message addEScoreByExamIdAndStudentIdAndCourseId(Integer examId, Integer studentId, Integer courseId, Integer score){
+        for (Escore escore: escoreMapper.findEscoreByExamIdAndStudentId(examId, studentId)){
+            escoreMapper.deleteEscore(escore.getId());
+        }
+        Student student = studentMapper.findStudentById(studentId);
+        Escore escore = new Escore(null, examId, student.getClazzId(), student.getId(), student.getGradeId(),courseId, score);
+        if (!escoreMapper.insertEscore(escore)){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return ResultUtils.error(404, "学生‘" + student.getName() + "’成绩添加失败");
+        }
+        return ResultUtils.success();
+    }
 
     public Escore listEScoreByExamIdAndStudentId(Integer examId, Integer studentId){
         return escoreMapper.findEscoreByExamIdAndStudentId(examId, studentId).get(0);

@@ -1,5 +1,7 @@
 package com.hfut.studentmanager.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.hfut.studentmanager.mapper.ClazzCourseTeacherMapper;
 import com.hfut.studentmanager.mapper.ClazzMapper;
 import com.hfut.studentmanager.mapper.CourseMapper;
@@ -112,6 +114,7 @@ public class TeacherController {
             map.put("number", student.getNumber());
             map.put("name", student.getName());
             map.put("examId", escore.getExamId());
+            map.put("courseId", escore.getCourseId());
             result.add(map);
         }
         return ResultUtils.success(result);
@@ -119,9 +122,18 @@ public class TeacherController {
 
     @PostMapping("/addScore")
     public Message addScore(@RequestBody String studentScore){
-//        System.out.println(studentScore);
-//        System.out.println(JSON.toJSONString(studentScore));
-        return null;
+        JSONArray jsonArray = JSONArray.parseArray(studentScore);
+        for (int i = 0; i < jsonArray.size(); i ++){
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            Integer examId = Integer.parseInt((String)jsonObject.get("examId"));
+            Integer studentId = Integer.parseInt((String)jsonObject.get("studentId"));
+            Integer courseId = Integer.parseInt((String)jsonObject.get("courseId"));
+            Integer score = Integer.parseInt((String)jsonObject.get("score"));
+            if (eScoreService.addEScoreByExamIdAndStudentIdAndCourseId(examId, studentId, courseId, score).getCode().equals("404")){
+                return ResultUtils.error(404, "学生成绩添加失败");
+            }
+        }
+        return ResultUtils.success();
     }
 
     @GetMapping("/getScore")
