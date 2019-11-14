@@ -31,6 +31,14 @@ public class TeacherService {
     @Autowired
     private GradeCourseMapper gradeCourseMapper;
 
+    public Teacher listTeacherById(Integer id){
+        return teacherMapper.findTeacherById(id);
+    }
+
+    public Teacher listTeacherByNumber(String number){
+        return teacherMapper.findTeacherByNumber(number);
+    }
+
     public List<Map<String, Object>> listAllTeacher(){
         List<Teacher> teacherList = teacherMapper.findAllTeacher();
         if (teacherList == null || teacherList.size() == 0){

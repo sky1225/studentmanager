@@ -33,6 +33,7 @@ public class GradeCourseService {
             map.put("id", gradeCourse.getId());
             map.put("gradeId", gradeCourse.getGradeId());
             map.put("course", courseMapper.findNameById(gradeCourse.getCourseId()));
+            map.put("courseId", gradeCourse.getCourseId());
             result.add(map);
         }
         return result;

@@ -19,8 +19,10 @@ public class EScoreService {
     @Autowired
     private StudentMapper studentMapper;
 
-    public List<Escore> listEScoreByStudentId(Integer studentId){
-        return escoreMapper.findEscoreByStudentId(studentId);
+
+
+    public List<Escore> listEScoreByExamIdAndStudentId(Integer examId, Integer studentId){
+        return escoreMapper.findEscoreByExamIdAndStudentId(examId, studentId);
     }
 
     public List<Map<String, Object>> listESCoreByExamIdAndClazzId(Integer examId, Integer clazzId){

@@ -4,9 +4,7 @@ import com.hfut.studentmanager.pojo.*;
 import com.hfut.studentmanager.service.*;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
-import com.hfut.studentmanager.utils.jsonBean.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +12,6 @@ import java.lang.System;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,11 +34,16 @@ public class SystemController {
     @Autowired
     private CourseService courseService;
     @Autowired
-    private SystemService systemService;
-    @Autowired
     private ClazzCourseTeacherService clazzCourseTeacherService;
     @Autowired
     private GradeCourseService gradeCourseService;
+
+    @PostMapping("updatePasswordByAccount")
+    public Message updatePasswordByAccount(@RequestParam("account") String account,
+                                           @RequestParam("oldPassword") String oldPassword,
+                                           @RequestParam("newPassword") String newPassword){
+        return userService.updatePassword(account, oldPassword, newPassword);
+    }
 
     @GetMapping("/list")
     public Message listAll(HttpServletRequest request, @RequestParam("method") String method,
@@ -199,95 +201,6 @@ public class SystemController {
         }
     }
 
-
-
-//    @PostMapping("/add")
-//    public Message add(@RequestBody Map<String, Object> map){
-//        User user = new User();
-//        String method = (String) map.get("method");
-//        Message result;
-//        try {
-//            switch (method) {
-//                case "addStudent":
-//                    JSONObject jsonObjectStudent = JSONObject.fromObject(map.get("student"));
-//                    JSONStudent jsonStudent = (JSONStudent) JSONObject.toBean(jsonObjectStudent, JSONStudent.class);
-//                    user.setAccount(jsonStudent.getNumber());
-//                    user.setName(jsonStudent.getName());
-//                    user.setPassword("111111");
-//                    user.setType(2);
-//                    Message addStudentResult = studentService.addStudent(jsonStudent);
-//                    if (addStudentResult.getCode().equals("200")) {
-//                        Message addUserResult = userService.addUser(user);
-//                        if (addUserResult.getCode().equals("200")) {
-//                            return ResultUtils.success();
-//                        } else {
-//                            return addUserResult;
-//                        }
-//                    } else {
-//                        return addStudentResult;
-//                    }
-//                case "addTeacher":
-//                    JSONObject jsonObjectTeacher = JSONObject.fromObject(map.get("teacher"));
-//
-//                    Map<String, Class> classMap = new HashMap<>();
-//                    classMap.put("courses", JSONCourse.class);
-//                    JSONTeacher jsonTeacher = (JSONTeacher) JSONObject.toBean(jsonObjectTeacher, JSONTeacher.class, classMap);
-//                    user.setAccount(jsonTeacher.getNumber());
-//                    user.setPassword("111111");
-//                    user.setName(jsonTeacher.getName());
-//                    user.setType(3);
-//
-//                    Message addTeacherResult = teacherService.addTeacher(jsonTeacher);
-//                    if (addTeacherResult.getCode().equals("200")) {
-//                        Message addUserResult = userService.addUser(user);
-//                        if (addUserResult.getCode().equals("200")){
-//                            return ResultUtils.success();
-//                        }
-//                        return addUserResult;
-//                    } else {
-//                        return addTeacherResult;
-//                    }
-//                case "addCourse":
-//                    JSONObject jsonObjectCourse = JSONObject.fromObject(map.get("course"));
-//                    Course course = (Course) JSONObject.toBean(jsonObjectCourse, Course.class);
-//                    return courseService.addCourse(course);
-//                case "addGrade":
-//                    JSONObject jsonObjectGrade = JSONObject.fromObject(map.get("grade"));
-//                    JSONGrade jsonGrade = (JSONGrade) JSONObject.toBean(jsonObjectGrade, JSONGrade.class);
-////                    result = gradeService.addGrade(jsonGrade);
-//                    if (result.getCode().equals("404")){
-//                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-//                    }else {
-//                        return result;
-//                    }
-//                case "addClazz":
-//                    JSONObject jsonObjectClazz = JSONObject.fromObject(map.get("clazz"));
-//                    JSONClazz jsonClazz = (JSONClazz) JSONObject.toBean(jsonObjectClazz, JSONClazz.class);
-//                    result = clazzService.addClazz(jsonClazz);
-//                    if (result.getCode().equals("404")){
-//                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-//                    }else {
-//                        return result;
-//                    }
-//                case "addExam":
-//                    JSONObject jsonObjectExam = JSONObject.fromObject(map.get("exam"));
-//                    JSONExam jsonExam = (JSONExam) JSONObject.toBean(jsonObjectExam, JSONExam.class);
-//                    result = examService.addExam(jsonExam);
-//                    if (result.getCode().equals("404")){
-//                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-//                    }else {
-//                        return result;
-//                    }
-//                default:
-//                    return ResultUtils.error(404, "添加失败，method参数格式错误");
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return ResultUtils.error(404, "添加失败");
-//        }
-//    }
-
-    @Transactional
     @GetMapping("/delete")
     public Message delete(@RequestParam("method") String method, @RequestParam("id") String id){
         switch (method){
@@ -303,18 +216,21 @@ public class SystemController {
                 return courseService.deleteCourse(Integer.parseInt(id));
             case "deleteExam":
                 return examService.deleteExam(Integer.parseInt(id));
-//            case "deleteClazzCourseTeacher":
-//                return clazzCourseTeacherService.
             default:
                 return ResultUtils.error(404, "method格式错误");
 
         }
     }
 
-    @GetMapping("/manage")
-    public Message systemManager(){
-        return ResultUtils.success();
-    }
+//    @GetMapping("/getSystemInfo")
+//    public Message systemManager(){
+//        return ResultUtils.success(systemService.listSystemInfo());
+//    }
+//
+//    @PostMapping("/getSystemInfo")
+//    public Message getSystemInfo(@RequestParam("schoolName")){
+//
+//    }
 
     private Message loginOut(HttpServletRequest request){
         request.getSession().removeAttribute("user");

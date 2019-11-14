@@ -10,6 +10,9 @@ import java.util.List;
 @Repository
 public interface TeacherMapper {
 
+    @Select("select * from teacher where number=#{number}")
+    Teacher findTeacherByNumber(String number);
+
     @Select("select * from teacher")
     List<Teacher> findAllTeacher();
 

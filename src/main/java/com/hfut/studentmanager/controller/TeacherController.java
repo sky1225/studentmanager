@@ -4,10 +4,7 @@ import com.hfut.studentmanager.mapper.ClazzCourseTeacherMapper;
 import com.hfut.studentmanager.mapper.ClazzMapper;
 import com.hfut.studentmanager.mapper.CourseMapper;
 import com.hfut.studentmanager.mapper.GradeMapper;
-import com.hfut.studentmanager.pojo.Clazz;
-import com.hfut.studentmanager.pojo.ClazzCourseTeacher;
-import com.hfut.studentmanager.pojo.Exam;
-import com.hfut.studentmanager.pojo.Student;
+import com.hfut.studentmanager.pojo.*;
 import com.hfut.studentmanager.service.*;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
@@ -38,6 +35,24 @@ public class TeacherController {
     private GradeService gradeService;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private TeacherService teacherService;
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/updatePasswordByTeacher")
+    public Message updatePasswordByTeacher(@RequestParam("teacherId") String teacherId,
+                                           @RequestParam("oldPassword") String oldPassword,
+                                           @RequestParam("newPassword") String newPassword){
+        Teacher teacher = teacherService.listTeacherById(Integer.parseInt(teacherId));
+        return userService.updatePassword(teacher.getNumber(), oldPassword, newPassword);
+    }
+
+    @GetMapping("/listTeacherByNumber")
+    public Message listTeacherByNumber(@RequestParam("number") String number){
+        Teacher teacher = teacherService.listTeacherByNumber(number);
+        return ResultUtils.success(teacher);
+    }
 
     @GetMapping("/listExam")
     public Message listExam(@RequestParam("teacherId") String teacherId){

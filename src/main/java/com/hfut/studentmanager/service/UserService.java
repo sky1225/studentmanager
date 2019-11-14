@@ -34,4 +34,21 @@ public class UserService {
         }
         return ResultUtils.success("注册成功");
     }
+
+    @Transactional
+    public Message updatePassword(String account, String oldPassword, String newPassword){
+        User user = userMapper.findUserByAccount(account);
+        if (user == null){
+            return ResultUtils.error(404, "用户不存在");
+        }
+        if (!user.getPassword().equals(oldPassword)){
+            return ResultUtils.error(404, "密码错误");
+        }
+        user.setPassword(newPassword);
+        if (!userMapper.updateUserPassword(user)){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return ResultUtils.error(404, "密码修改失败");
+        }
+        return ResultUtils.success();
+    }
 }

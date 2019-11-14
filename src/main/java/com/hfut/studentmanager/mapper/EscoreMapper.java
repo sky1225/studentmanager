@@ -19,7 +19,11 @@ public interface EscoreMapper {
     @Select("select * from escore where id=#{id}")
     List<Escore> findEscoreById(Integer id);
 
-    @Select("select * from escore where examId=#{examId} and clazzId+#{clazzId}")
+    @Select("select * from escore where examId=#{examId} and studentId=#{studentId}")
+    List<Escore> findEscoreByExamIdAndStudentId(@Param("examId") Integer examId, @Param("studentId")Integer studentId);
+
+
+    @Select("select * from escore where examId=#{examId} and clazzId=#{clazzId}")
     List<Escore> findEscoreByExamIdAndClazzId(@Param("examId") Integer examId, @Param("clazzId")Integer clazzId);
 
     @Select("select * from escore where examId=#{examId}")
