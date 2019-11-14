@@ -179,16 +179,12 @@ public class SystemController {
                            @RequestParam(value = "remark", required = false) String remark,
                            @RequestParam(value = "type", required = true) String type,
                            @RequestParam(value = "gradeId", required = true) String gId,
-                           @RequestParam(value = "clazzId", required = false) String cId,
+                           @RequestParam(value = "clazzId", required = true) String cId,
                            @RequestParam(value = "courseId", required = true) String csId){
         Date date;
         System.out.println(time);
         Integer gradeId = Integer.parseInt(gId);
-        Integer clazzId = null;
-        System.out.println(cId);
-        if (!("".equals(cId))){
-            clazzId = Integer.parseInt(cId);
-        }
+        Integer clazzId = Integer.parseInt(cId);
         Integer courseId = Integer.parseInt(csId);
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

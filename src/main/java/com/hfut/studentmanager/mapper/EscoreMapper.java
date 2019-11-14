@@ -13,6 +13,9 @@ import java.util.List;
 @Repository
 public interface EscoreMapper {
 
+//    @Select("select * from escore where studentId=#{studentId}")
+//    List<Escore> findEscoreByStudentId(Integer studentId);
+
     @Select("select * from escore")
     List<Escore> findAllEscore();
 

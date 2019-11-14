@@ -60,9 +60,13 @@ public class StudentService {
         if (student == null){
             return ResultUtils.error(404, "此学生不存在，删除失败");
         }
-        if (!userMapper.deleteUserByAccount(student.getNumber())
-            || !escoreMapper.deleteEscoreByStudentId(id)
-                || !studentMapper.deleteStudentById(id)){
+        if (!(escoreMapper.findEscoreByStudentId(id) == null || escoreMapper.findEscoreByStudentId(id) != null && escoreMapper.findEscoreByStudentId(id).size() == 0)){
+            if (!escoreMapper.deleteEscoreByStudentId(id)){
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                return ResultUtils.error(404, "删除失败");
+            }
+        }
+        if (!userMapper.deleteUserByAccount(student.getNumber()) || !studentMapper.deleteStudentById(id)){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "删除失败");
         }

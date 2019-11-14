@@ -69,7 +69,7 @@ public class StudentController {
                     map.put("clazz", clazz.getName());
                 }
                 map.put("course", courseService.listCourseById(exam.getCourseId()).getName());
-                map.put("score", eScoreService.listEScoreByExamIdAndStudentId(exam.getId(), Integer.parseInt(studentId)));
+                map.put("score", eScoreService.listEScoreByExamIdAndStudentId(exam.getId(), Integer.parseInt(studentId)).get(0).getScore());
                 result.add(map);
             }
         }
