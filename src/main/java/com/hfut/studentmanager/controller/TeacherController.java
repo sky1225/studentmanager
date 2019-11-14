@@ -99,7 +99,22 @@ public class TeacherController {
     public Message addScore(@RequestParam("examId") String examId,
                             @RequestParam("clazzId") String clazzId){
         List<Student> studentList = studentService.listStudentByClazz(Integer.parseInt(clazzId));
-        return ResultUtils.success(studentList);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Student student: studentList){
+            Map<String, Object> map = new HashMap<>();
+            Escore escore = eScoreService.listEScoreByExamIdAndStudentId(Integer.parseInt(examId), student.getId());
+            if (escore != null){
+                map.put("score", escore.getScore());
+            }else {
+                map.put("score", -1);
+            }
+            map.put("studentId", student.getId());
+            map.put("number", student.getNumber());
+            map.put("name", student.getName());
+            map.put("examId", escore.getExamId());
+            result.add(map);
+        }
+        return ResultUtils.success(result);
     }
 
     @PostMapping("/addScore")

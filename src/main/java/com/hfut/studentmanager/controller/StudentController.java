@@ -44,7 +44,11 @@ public class StudentController {
 
     @GetMapping("/listStudentByNumber")
     public Message listStudentById(@RequestParam("number") String number){
-        return ResultUtils.success(studentService.listStudentByNumber(number));
+        Student student = studentService.listStudentByNumber(number);
+        if (student != null){
+            return ResultUtils.success(student);
+        }
+        return ResultUtils.error(404, "学生不存在");
     }
 
     @GetMapping("/listExamByStudent")
@@ -69,7 +73,7 @@ public class StudentController {
                     map.put("clazz", clazz.getName());
                 }
                 map.put("course", courseService.listCourseById(exam.getCourseId()).getName());
-                map.put("score", eScoreService.listEScoreByExamIdAndStudentId(exam.getId(), Integer.parseInt(studentId)).get(0).getScore());
+                map.put("score", eScoreService.listEScoreByExamIdAndStudentId(exam.getId(), Integer.parseInt(studentId)).getScore());
                 result.add(map);
             }
         }

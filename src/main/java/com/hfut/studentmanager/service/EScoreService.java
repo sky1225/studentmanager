@@ -21,8 +21,8 @@ public class EScoreService {
 
 
 
-    public List<Escore> listEScoreByExamIdAndStudentId(Integer examId, Integer studentId){
-        return escoreMapper.findEscoreByExamIdAndStudentId(examId, studentId);
+    public Escore listEScoreByExamIdAndStudentId(Integer examId, Integer studentId){
+        return escoreMapper.findEscoreByExamIdAndStudentId(examId, studentId).get(0);
     }
 
     public List<Map<String, Object>> listESCoreByExamIdAndClazzId(Integer examId, Integer clazzId){
