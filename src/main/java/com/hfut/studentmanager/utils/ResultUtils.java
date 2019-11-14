@@ -16,6 +16,7 @@ public class ResultUtils {
      */
     public static Message loginSuccess(User user) {
         Map<String, Object> map = new HashMap<>();
+        map.put("name", user.getName());
         map.put("type", user.getType());
         map.put("account", user.getAccount());
         Message message = new Message();
