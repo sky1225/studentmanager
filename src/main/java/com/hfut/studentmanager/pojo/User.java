@@ -7,7 +7,7 @@ public class User {
   private String account;
   private String password;
   private String name;
-  private Integer type;
+  private Integer type; //  用户类型 1 -- 管理员  2 -- 学生  3 -- 教师
 
   public Integer getId() {
     return id;

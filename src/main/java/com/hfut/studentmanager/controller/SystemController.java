@@ -180,7 +180,6 @@ public class SystemController {
                            @RequestParam(value = "clazzId", required = true) String cId,
                            @RequestParam(value = "courseId", required = true) String csId){
         Date date;
-        System.out.println(time);
         Integer gradeId = Integer.parseInt(gId);
         Integer courseId = Integer.parseInt(csId);
         if (gradeCourseService.listGradeCourseByGradeIdAndCourseId(gradeId, courseId) == null){

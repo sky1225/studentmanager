@@ -42,10 +42,19 @@ public class StudentController {
     @GetMapping("/listStudentByNumber")
     public Message listStudentById(@RequestParam("number") String number){
         Student student = studentService.listStudentByNumber(number);
-        if (student != null){
-            return ResultUtils.success(student);
+        if (student == null){
+            return ResultUtils.error(404, "学生不存在");
         }
-        return ResultUtils.error(404, "学生不存在");
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", student.getId());
+        map.put("number", student.getNumber());
+        map.put("name", student.getName());
+        map.put("sex", student.getSex());
+        map.put("phone", student.getPhone());
+        map.put("qq", student.getQq());
+        map.put("clazzId", clazzService.listClazzById(student.getClazzId()).getName());
+        map.put("gradeId", gradeService.listGradeById(student.getGradeId()).getName());
+        return ResultUtils.success(map);
     }
 
     @GetMapping("/listExamByStudent")

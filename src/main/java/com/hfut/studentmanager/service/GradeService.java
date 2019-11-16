@@ -35,7 +35,6 @@ public class GradeService {
 
     public List<Map<String, Object>> listAllGrade() {
         List<Grade> gradeList = gradeMapper.findAllGrade();
-        System.out.println(gradeList);
         List<Map<String, Object>> result = new ArrayList<>();
         for (Grade grade: gradeList){
             Map<String, Object> map = new HashMap<>();
@@ -51,10 +50,8 @@ public class GradeService {
             }else {
                 map.put("courseNames", "");
             }
-            System.out.println(map);
             result.add(map);
         }
-        System.out.println(result);
         return result;
     }
 
