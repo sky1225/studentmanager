@@ -53,12 +53,16 @@ public class TeacherController {
 
     @GetMapping("/listExam")
     public Message listExam(@RequestParam("teacherId") String teacherId){
+        //此教师教的所有课程
         List<ClazzCourseTeacher> clazzCourseTeacherList = clazzCourseTeacherService.listClazzCourseTeacherByTeacherId(Integer.parseInt(teacherId));
         List<Map<String, Object>> result = new ArrayList<>();
 
         for (ClazzCourseTeacher clazzCourseTeacher: clazzCourseTeacherList){
+            //课程id
             Integer courseId = clazzCourseTeacher.getCourseId();
+            //班级id
             Integer clazzId = clazzCourseTeacher.getClazzId();
+            //某门课程发布的考试
             for (Exam exam: examService.listExamByCourseId(courseId)){
                 Map<String, Object> map = new HashMap<>();
                 if (exam.getType().equals(1)  || exam.getClazzId().equals(clazzId)){

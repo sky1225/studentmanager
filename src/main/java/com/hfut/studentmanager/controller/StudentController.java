@@ -1,9 +1,6 @@
 package com.hfut.studentmanager.controller;
 
-import com.hfut.studentmanager.pojo.Clazz;
-import com.hfut.studentmanager.pojo.Exam;
-import com.hfut.studentmanager.pojo.Grade;
-import com.hfut.studentmanager.pojo.Student;
+import com.hfut.studentmanager.pojo.*;
 import com.hfut.studentmanager.service.*;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
@@ -73,7 +70,12 @@ public class StudentController {
                     map.put("clazz", clazz.getName());
                 }
                 map.put("course", courseService.listCourseById(exam.getCourseId()).getName());
-                map.put("score", eScoreService.listEScoreByExamIdAndStudentId(exam.getId(), Integer.parseInt(studentId)).getScore());
+                Escore escore = eScoreService.listEScoreByExamIdAndStudentId(exam.getId(), Integer.parseInt(studentId));
+                if(escore == null){
+                    map.put("score", "");
+                }else {
+                    map.put("score", escore.getScore().toString());
+                }
                 result.add(map);
             }
         }

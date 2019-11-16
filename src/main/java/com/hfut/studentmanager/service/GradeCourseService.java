@@ -26,6 +26,10 @@ public class GradeCourseService {
     @Autowired
     private GradeMapper gradeMapper;
 
+    public GradeCourse listGradeCourseByGradeIdAndCourseId(Integer gradeId, Integer courseId){
+        return gradeCourseMapper.findGradeCourseByGradeIdAndCourseId(gradeId, courseId);
+    }
+
     public List<Map<String, Object>> listGradeCourseByGradeId(Integer gradeId){
         List<Map<String, Object>> result = new ArrayList<>();
         for (GradeCourse gradeCourse: gradeCourseMapper.findGradeCourseByGradeId(gradeId)){

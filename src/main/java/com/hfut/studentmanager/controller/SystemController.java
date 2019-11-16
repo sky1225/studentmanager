@@ -184,8 +184,11 @@ public class SystemController {
         Date date;
         System.out.println(time);
         Integer gradeId = Integer.parseInt(gId);
-        Integer clazzId = Integer.parseInt(cId);
         Integer courseId = Integer.parseInt(csId);
+        if (gradeCourseService.listGradeCourseByGradeIdAndCourseId(gradeId, courseId) == null){
+            return ResultUtils.error(404, "该年级下不存在该课程");
+        }
+        Integer clazzId = Integer.parseInt(cId);
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             date = dateFormat.parse(time);
