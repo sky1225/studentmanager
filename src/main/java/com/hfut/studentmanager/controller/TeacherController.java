@@ -1,19 +1,14 @@
 package com.hfut.studentmanager.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.hfut.studentmanager.mapper.ClazzCourseTeacherMapper;
-import com.hfut.studentmanager.mapper.ClazzMapper;
-import com.hfut.studentmanager.mapper.CourseMapper;
-import com.hfut.studentmanager.mapper.GradeMapper;
 import com.hfut.studentmanager.pojo.*;
 import com.hfut.studentmanager.service.*;
 import com.hfut.studentmanager.utils.Message;
 import com.hfut.studentmanager.utils.ResultUtils;
-import com.sun.javafx.menu.MenuBase;
+import com.hfut.studentmanager.utils.jsonBean.Score;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.System;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -109,9 +104,9 @@ public class TeacherController {
             Map<String, Object> map = new HashMap<>();
             Escore escore = eScoreService.listEScoreByExamIdAndStudentId(Integer.parseInt(examId), student.getId());
             if (escore != null){
-                map.put("score", escore.getScore());
+                map.put("score", escore.getScore().toString());
             }else {
-                map.put("score", -1);
+                map.put("score", "");
             }
             map.put("studentId", student.getId());
             map.put("number", student.getNumber());
@@ -123,16 +118,12 @@ public class TeacherController {
     }
 
     @PostMapping("/addScore")
-    public Message addScore(@RequestBody String studentScore){
-        JSONArray jsonArray = JSONArray.parseArray(studentScore);
-        for (int i = 0; i < jsonArray.size(); i ++){
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            Integer examId = Integer.parseInt((String)jsonObject.get("examId"));
-            Integer studentId = Integer.parseInt((String)jsonObject.get("studentId"));
-            Integer courseId = Integer.parseInt((String)jsonObject.get("courseId"));
-            Integer score = Integer.parseInt((String)jsonObject.get("score"));
-            if (eScoreService.addEScoreByExamIdAndStudentIdAndCourseId(examId, studentId, courseId, score).getCode().equals("404")){
-                return ResultUtils.error(404, "学生成绩添加失败");
+    public Message addScore(@RequestBody List<Score> studentScore){
+        for (Score score : studentScore) {
+            Message result = eScoreService.addEScoreByExamIdAndStudentIdAndCourseId(score.getExamId(), score.getStudentId(),
+                    examService.listExamById(score.getExamId()).getCourseId(), Integer.parseInt(score.getScore()));
+            if (result.getCode().equals("404")){
+                return result;
             }
         }
         return ResultUtils.success();

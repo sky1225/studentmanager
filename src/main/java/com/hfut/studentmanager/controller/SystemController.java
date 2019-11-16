@@ -55,7 +55,7 @@ public class SystemController {
             case "LoginOut":
                 return loginOut(request);
             case "listAllStudent":
-                List<Student> studentList = studentService.listAllStudent();
+                List<Map<String, Object>> studentList = studentService.listAllStudent();
                 return ResultUtils.success(studentList);
             case "listAllTeacher":
                 List<Map<String, Object>> teacherList = teacherService.listAllTeacher();

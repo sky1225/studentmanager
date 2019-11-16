@@ -1,10 +1,7 @@
 package com.hfut.studentmanager.mapper;
 
 import com.hfut.studentmanager.pojo.Escore;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -44,9 +41,9 @@ public interface EscoreMapper {
     @Select("select * from escore where gradeId=#{gradeId}")
     List<Escore> findEscoreByGradeId(Integer gradeId);
 
-    @Select("insert into escore(examId, clazzId, studentId, gradeId, courseId, score) values" +
-            "(#{examId}, #{clazzId}, #{studentId}, #{gradeId}, #{courseId}, #{score})")
-    boolean insertEscore(Escore escore);
+    @Insert("insert into escore(examId, clazzId, studentId, gradeId, courseId, score) values" +
+            "(#{escore.examId}, #{escore.clazzId}, #{escore.studentId}, #{escore.gradeId}, #{escore.courseId}, #{escore.score})")
+    boolean insertEscore(@Param("escore") Escore escore);
 
     @Delete("delete from escore where id=#{id}")
     boolean deleteEscore(Integer id);

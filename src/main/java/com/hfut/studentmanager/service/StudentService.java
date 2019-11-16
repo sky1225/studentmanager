@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StudentService {
@@ -36,8 +40,21 @@ public class StudentService {
         return studentMapper.findStudentByClazzId(clazzId);
     }
 
-    public List<Student> listAllStudent(){
-        return studentMapper.findAllStudent();
+    public List<Map<String, Object>> listAllStudent(){
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Student student: studentMapper.findAllStudent()){
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", student.getId());
+            map.put("number", student.getNumber());
+            map.put("name", student.getName());
+            map.put("sex", student.getSex());
+            map.put("phone", student.getPhone());
+            map.put("qq", student.getQq());
+            map.put("clazzId", clazzMapper.findNameById(student.getClazzId()));
+            map.put("gradeId", gradeMapper.findNameById(student.getGradeId()));
+            result.add(map);
+        }
+        return result;
     }
 
     @Transactional

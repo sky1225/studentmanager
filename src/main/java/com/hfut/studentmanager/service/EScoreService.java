@@ -31,7 +31,10 @@ public class EScoreService {
             escoreMapper.deleteEscore(escore.getId());
         }
         Student student = studentMapper.findStudentById(studentId);
-        Escore escore = new Escore(null, examId, student.getClazzId(), student.getId(), student.getGradeId(),courseId, score);
+        if (student == null){
+            return ResultUtils.error(404, "要添加成绩的学生不存在");
+        }
+        Escore escore = new Escore(null, examId, student.getClazzId(), student.getId(), student.getGradeId(), courseId, score);
         if (!escoreMapper.insertEscore(escore)){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResultUtils.error(404, "学生‘" + student.getName() + "’成绩添加失败");
