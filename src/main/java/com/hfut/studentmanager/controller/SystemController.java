@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.System;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/system")
@@ -55,7 +53,7 @@ public class SystemController {
             case "LoginOut":
                 return loginOut(request);
             case "listAllStudent":
-                List<Map<String, Object>> studentList = studentService.listAllStudent();
+                List<Map<String, Object>> studentList = StudentListToMapList(studentService.listAllStudent());
                 return ResultUtils.success(studentList);
             case "listAllTeacher":
                 List<Map<String, Object>> teacherList = teacherService.listAllTeacher();
@@ -221,15 +219,25 @@ public class SystemController {
         }
     }
 
-//    @GetMapping("/getSystemInfo")
-//    public Message systemManager(){
-//        return ResultUtils.success(systemService.listSystemInfo());
-//    }
-//
-//    @PostMapping("/getSystemInfo")
-//    public Message getSystemInfo(@RequestParam("schoolName")){
-//
-//    }
+    private List<Map<String, Object>> StudentListToMapList(List<Student> studentList){
+        if (studentList == null || studentList.size() == 0){
+            return null;
+        }
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Student student: studentList){
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", student.getId());
+            map.put("number", student.getNumber());
+            map.put("name", student.getName());
+            map.put("sex", student.getSex());
+            map.put("phone", student.getPhone());
+            map.put("qq", student.getQq());
+            map.put("clazzId", clazzService.listClazzById(student.getClazzId()).getName());
+            map.put("gradeId", gradeService.listGradeById(student.getGradeId()).getName());
+            result.add(map);
+        }
+        return result;
+    }
 
     private Message loginOut(HttpServletRequest request){
         request.getSession().removeAttribute("user");

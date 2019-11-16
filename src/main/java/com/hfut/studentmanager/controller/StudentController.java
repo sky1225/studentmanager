@@ -90,6 +90,26 @@ public class StudentController {
         }
         Integer clazzId = student.getClazzId();
         List<Student> studentList = studentService.listStudentByClazz(clazzId);
-        return ResultUtils.success(studentList);
+        return ResultUtils.success(StudentListToMapList(studentList));
+    }
+
+    private List<Map<String, Object>> StudentListToMapList(List<Student> studentList){
+        if (studentList == null || studentList.size() == 0){
+            return null;
+        }
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Student student: studentList){
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", student.getId());
+            map.put("number", student.getNumber());
+            map.put("name", student.getName());
+            map.put("sex", student.getSex());
+            map.put("phone", student.getPhone());
+            map.put("qq", student.getQq());
+            map.put("clazzId", clazzService.listClazzById(student.getClazzId()).getName());
+            map.put("gradeId", gradeService.listGradeById(student.getGradeId()).getName());
+            result.add(map);
+        }
+        return result;
     }
 }
