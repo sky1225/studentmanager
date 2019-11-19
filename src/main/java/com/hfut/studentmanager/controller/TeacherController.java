@@ -72,7 +72,13 @@ public class TeacherController {
                     map.put("remark", exam.getRemark());
                     map.put("type", exam.getType());
                     map.put("grade", gradeService.listGradeById(exam.getGradeId()).getName());
-                    map.put("clazz", clazzService.listClazzById(exam.getClazzId()).getName());
+                    Clazz clazz = clazzService.listClazzById(exam.getClazzId());
+                    if (clazz == null){
+                        map.put("clazz", "年级统考");
+                    }else {
+                        map.put("clazz", clazz.getName());
+                    }
+
                     map.put("course", courseService.listCourseById(exam.getCourseId()).getName());
                     result.add(map);
                 }
@@ -86,7 +92,7 @@ public class TeacherController {
         Exam exam = examService.listExamById(Integer.parseInt(examId));
         Map<String, Object> result = new HashMap<>();
         List<Clazz> clazzList;
-        if (exam.getClazzId() != null){
+        if (exam.getClazzId() != 0){
             clazzList = new ArrayList<>();
             clazzList.add(clazzService.listClazzById(exam.getClazzId()));
         }else {
